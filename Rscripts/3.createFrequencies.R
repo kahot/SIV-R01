@@ -3,11 +3,13 @@ library(tidyverse)
 
 source("Rscripts/BaseRscript2.R")
 
-dir.create("Output/SeqData/")
+#ir.create("Output/SeqData/")
 
 ###########################
 
 SIVFiles<-list.files("Output/CSV/",pattern="csv")
+
+SIVFiles<-SIVFiles[s2]
 
 coding.start<-172
 coding.end<-681

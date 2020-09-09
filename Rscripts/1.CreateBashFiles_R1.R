@@ -22,9 +22,12 @@ write.csv(flist,"Data/Run3_filenames.csv")
 write.csv(flist,"Data/Run2_filenames.csv")
 
 ##### 
-#Select Monkey  A22317 files
+#Select samples
 
 samples<-read.csv("Data/Samples.csv")
+samples2<-read.csv("Data/additional_samples.csv")
+
+
 
 # number of unique monkeys
 list.animal<-split(samples, samples$Monkey)

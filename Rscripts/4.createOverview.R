@@ -5,6 +5,7 @@ source("Rscripts/BaseRscript2.R")
 
 #get the file name
 SIVFiles_SeqData<-list.files("Output/SeqData/",pattern="SeqData")
+SIVFiles_SeqData<-SIVFiles_SeqData[s2]
 
 Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   
@@ -220,8 +221,7 @@ overviews<-list.files("Output/Overview/",pattern="overview.csv")
 
 Ove<-list()
 for (i in 1:length(overviews)){ 
-    df<-read.csv(paste0("Output/Overview/",overviews[i]),stringsAsFactors=F, row.names = 1)
-    m<-mean(df$TotalReads, na.rm=T)
+    cm<-mean(df$TotalReads, na.rm=T)
     print(substr(paste(overviews[i]),start=1,stop=7))
     print(m)
     #Ove[[i]]<-df
