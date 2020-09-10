@@ -8,9 +8,9 @@
 "7",178,7,"t","t","c","c",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","W","R","R","G",1,1,1,0,1,1,0
 "8",179,2,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"stop","nonsyn","nonsyn","stop","nonsyn","nonsyn","W","*","S","L",1,1,0,0,1,1,0
 "9",180,2,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"stop","nonsyn","nonsyn","stop","nonsyn","nonsyn","W","*","C","C",1,1,1,0,0,0,0
-"10",181,2,"g","a","a","g",0,1,0,0,0,0,0,0,0,1,"nonsyn","nonsyn","stop","nonsyn","nonsyn","stop","E","K","Q","*",1,1,1,0,1,1,0
+"10",181,2,"g","a","a","g",0,1,0,0,0,0,0,0,0,1,"nonsyn","nonsyn","stop","nonsyn","nonsyn","nonsyn","E","K","Q","*",1,1,1,0,1,1,0
 "11",182,2,"a","a","g","g",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","G","A","V",1,1,1,0,0,0,0
-"12",183,2,"g","c","a","t",0,0,0,1,0,0,0,0,0,1,"syn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0
+"12",183,2,"g","c","a","t",0,0,0,1,0,0,0,0,0,1,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0
 "13",184,2,"a","a","g","g",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","N","D","H","Y",1,1,1,0,0,0,0
 "14",185,256,"a","a","g","g",0.3125,0.3125,0.375,0.375,0.15625,0.21875,0.15625,0.21875,0.6875,0.6875,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","N","S","T","I",0,0,1,0,0,0,0
 "15",186,269,"t","t","c","c",0,0,0,0,0,0,0,0,0,0,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","N","N","K","K",0,1,1,0,0,0,0
@@ -257,9 +257,9 @@
 "256",427,15,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","stop","nonsyn","nonsyn","stop","E","K","Q","*",1,1,1,0,0,0,0
 "257",428,14,"a","a","g","g",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","G","A","V",1,1,1,0,0,0,0
 "258",429,14,"a","g","g","a",0.5,0.5,0,0,0,0,0,0,0.5,0.5,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0
-"259",430,14,"c","c","t","t",0,0,0,0,0,0,0,0,0,0,"stop","nonsyn","nonsyn","stop","nonsyn","nonsyn","Q","*","K","E",1,1,1,1,1,1,0
-"260",431,12,"a","c","g","t",0.5,0,0,1,0,0,0,0,0.5,1,"nonsyn","nonsyn","nonsyn","nonsyn","syn","nonsyn","Q","R","P","L",1,1,1,0,1,1,0
-"261",432,14,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"syn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","Q","H","H",0,1,1,0,0,0,0
+"259",430,14,"c","c","t","t",0,0,0,0,0,0,0,0,0,0,"stop","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","*","K","E",1,1,1,1,1,1,0
+"260",431,12,"a","c","g","t",0.5,0,0,1,0,0,0,0,0.5,1,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","R","P","L",1,1,1,0,1,1,0
+"261",432,14,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"syn","nonsyn","nonsyn","syn","syn","syn","Q","Q","H","H",0,1,1,0,0,0,0
 "262",433,18,"g","g","a","a",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","stop","nonsyn","nonsyn","stop","E","K","Q","*",1,1,1,0,0,0,0
 "263",434,18,"a","a","g","g",0,0,0,0,0,0,0,0,0,0,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","G","A","V",1,1,1,0,0,0,0
 "264",435,18,"a","a","g","g",0,0,0,0,0,0,0,0,0,0,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0

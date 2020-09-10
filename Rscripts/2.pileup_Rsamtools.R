@@ -7,10 +7,9 @@ source("Rscripts/pileupFreq.R")
 bamfiles<-list.files("Output/bam/",pattern="bam$")
 #dir.create("Output/CSV/")
 
-bamfiles
 #select 1, 4, 14, 9, 10,
-s2<-c(20,32)
-bamfiles<-bamfiles[s2]
+#s2<-c(20,32)
+#bamfiles<-bamfiles[s2]
 
 for (i in 1:length(bamfiles)){
         bam<-bamfiles[i]

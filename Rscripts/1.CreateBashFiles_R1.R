@@ -5,6 +5,9 @@ library(stringr)
 fq<-list.files("~/programs/BaseSpace/B670_Run_3-142079938/", pattern="fastq.gz$",recursive = T) 
 fq<-list.files("~/programs/BaseSpace/B670_Run_2-123312015/", pattern="fastq.gz$",recursive = T) 
 fq<-list.files("~/programs/BaseSpace/Ambrose_B670-2-77614630/", pattern="fastq.gz$",recursive = T) 
+fq<-list.files("~/programs/BaseSpace/Ambrose1-41042018/", pattern="fastq.gz$",recursive = T) 
+
+
 
 #create a list of file names:
 n<-seq(1, by = 2, len = (length(fq)/2))
@@ -25,7 +28,7 @@ write.csv(flist,"Data/Run2_filenames.csv")
 #Select samples
 
 samples<-read.csv("Data/Samples.csv")
-samples2<-read.csv("Data/additional_samples.csv")
+#samples2<-read.csv("Data/additional_samples.csv")
 
 
 
@@ -76,12 +79,14 @@ for (i in 1:length(fq2)){
   if (fname2=="Ambrose_B6") fname<- paste0("Run1_", substr(fname1, 1,2))
   if (fname2=="B670_Run_2") fname<- paste0("Run2_", substr(fname1, 1,2))
   if (fname2=="B670_Run_3") fname<- paste0("Run3_", substr(fname1, 1,2))
+  if (fname2=="FASTQ_Gene") fname<- paste0("Run0_", substr(fname1, 1,2))
   
   new<-gsub(pattern="10_S10_L001_R1_001.fastq", replace=paste0(fa1),x=cmmd)
   new<-gsub(pattern="10_S10_L001_R2_001.fastq", replace=paste0(fa2),x=new)
   new<-gsub(pattern="M10",replace=paste0(fname),x=new)
-  writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
-
+  #writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
+  writeLines(new, con=paste0("Data/Bash1/",fname,".sh"))
+  
 }
 
 
@@ -101,6 +106,29 @@ for (i in 1:length(fq)){
    # writeLines(new, con=paste0("Data/Bashscripts/map.",fname,".sh"))
     
 }
+
+
+
+### Run0
+fq<-list.files("~/programs/BaseSpace/Ambrose1-41042018/", pattern="fastq.gz$",recursive = T) 
+n<-seq(1, by = 2, len = (length(fq)/2))
+fq2<-fq[n]
+for (i in 1:length(fq2)){
+    #choose the paired reads fastq files
+    fa1<-paste0("Ambrose1-41042018/",fq2[i])
+    fa2<-gsub(pattern="R1",replace="R2",x=fa1)
+    fname1<-sub(".*/", "", fq2[i])
+    fname<- paste0("Run0_", substr(fname1, 1,2))
+    
+    new<-gsub(pattern="10_S10_L001_R1_001.fastq", replace=paste0(fa1),x=cmmd)
+    new<-gsub(pattern="10_S10_L001_R2_001.fastq", replace=paste0(fa2),x=new)
+    new<-gsub(pattern="M10",replace=paste0(fname),x=new)
+    #writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
+    writeLines(new, con=paste0("Data/Bash1/",fname,".sh"))
+    
+}
+
+
 
 
 ### run samtools -sort and index bam

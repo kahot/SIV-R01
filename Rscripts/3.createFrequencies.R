@@ -1,6 +1,4 @@
 library(tidyverse)
-
-
 source("Rscripts/BaseRscript2.R")
 
 #ir.create("Output/SeqData/")
@@ -9,7 +7,7 @@ source("Rscripts/BaseRscript2.R")
 
 SIVFiles<-list.files("Output/CSV/",pattern="csv")
 
-SIVFiles<-SIVFiles[s2]
+#SIVFiles<-SIVFiles[s2]
 
 coding.start<-172
 coding.end<-681

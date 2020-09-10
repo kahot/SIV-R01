@@ -2,7 +2,7 @@
 "1",172,NA,NA,"g",NA,"a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "2",173,NA,NA,"a",NA,"g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "3",174,NA,NA,"t",NA,"c",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
-"4",175,NA,NA,"g",NA,"a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
+"4",175,NA,NA,"g",NA,"a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","syn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "5",176,NA,NA,"c",NA,"t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "6",177,NA,NA,"c",NA,"t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "7",178,NA,NA,"t",NA,"c",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
@@ -12,8 +12,8 @@
 "11",182,2,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,0,0,0,0
 "12",183,2,"c","c","t","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"NA","NA","NA","nonsyn","nonsyn","nonsyn","NA","NA","NA","NA",0,0,0,1,1,1,0
 "13",184,2,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","S","G","R","C",1,1,1,0,0,0,0
-"14",185,361,"g","a","a","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","syn","nonsyn","nonsyn","S","N","T","I",0,0,1,0,0,0,0
-"15",186,375,"t","t","c","c",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","S","S","R","R",0,1,1,0,0,0,0
+"14",185,361,"g","a","a","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","S","N","T","I",0,0,1,0,0,0,0
+"15",186,375,"t","t","c","c",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","S","S","R","R",0,1,1,0,0,0,0
 "16",187,378,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","T","A","P","S",1,1,0,0,0,0,0
 "17",188,402,"c","c","t","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","T","I","K","R",1,1,1,1,1,1,0
 "18",189,667,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","syn","syn","syn","syn","syn","T","T","T","T",0,0,0,0,0,0,0
@@ -257,9 +257,9 @@
 "256",427,11514,"g","g","a","a",0.000868507903421921,0.000868507903421921,0.000347403161368768,0.000347403161368768,0,0.000347403161368768,0,0.000347403161368768,0.00121591106479069,0.00121591106479069,"nonsyn","nonsyn","stop","nonsyn","nonsyn","stop","E","K","Q","*",1,1,1,0,1,1,0
 "257",428,11208,"a","a","g","g",0.0407744468236974,0.0407744468236974,0.000713775874375446,0.000713775874375446,0,0.000713775874375446,0,0.000713775874375446,0.0414882226980728,0.0414882226980728,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","G","A","V",1,1,1,0,0,0,0
 "258",429,9915,"g","g","a","a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0
-"259",430,9850,"c","c","t","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"stop","nonsyn","nonsyn","stop","nonsyn","nonsyn","Q","*","K","E",1,1,1,1,1,1,0
-"260",431,9404,"a","c","g","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","syn","nonsyn","Q","R","P","L",1,1,1,0,1,1,0
-"261",432,9133,"g","g","a","a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","Q","H","H",0,1,1,0,0,0,0
+"259",430,9850,"c","c","t","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"stop","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","*","K","E",1,1,1,1,1,1,0
+"260",431,9404,"a","c","g","t",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","Q","R","P","L",1,1,1,0,1,1,0
+"261",432,9133,"g","g","a","a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","syn","syn","syn","Q","Q","H","H",0,1,1,0,0,0,0
 "262",433,8773,"g","g","a","a",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","stop","nonsyn","nonsyn","stop","E","K","Q","*",1,1,1,0,0,0,0
 "263",434,8767,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","nonsyn","E","G","A","V",1,1,1,0,0,0,0
 "264",435,8727,"a","a","g","g",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"syn","nonsyn","nonsyn","syn","nonsyn","nonsyn","E","E","D","D",0,0,0,0,0,0,0
