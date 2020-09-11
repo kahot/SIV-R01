@@ -1,7 +1,7 @@
 library(tidyverse)
 source("Rscripts/BaseRscript2.R")
 
-#ir.create("Output/SeqData/")
+#dir.create("Output/SeqData/")
 
 ###########################
 
@@ -9,7 +9,7 @@ SIVFiles<-list.files("Output/CSV/",pattern="csv")
 
 #SIVFiles<-SIVFiles[s2]
 
-coding.start<-172
+coding.start<-190
 coding.end<-681
 no<-data.frame("pos"=c(coding.start:coding.end))
 for (i in 1:length(SIVFiles)){
@@ -57,7 +57,8 @@ for (i in 1:length(SIVFiles)){
                         SeqData$freq.mutations[k]<-NA
                         
                         }
-                else {MajNum <- SeqData [k,which(c("a","c","g","t")==SeqData$MajNt[k])]
+                else {
+                      MajNum <- SeqData [k,which(c("a","c","g","t")==SeqData$MajNt[k])]
                       MutNum1<- SeqData [k,which(c("a","c","g","t")==SeqData$transition.maj[k])]
                       WTNum <- SeqData [k,which(c("a","c","g","t")==SeqData$ref[k])]
                       MutNum2<- SeqData [k,which(c("a","c","g","t")==SeqData$transition.ref[k])]
@@ -67,16 +68,16 @@ for (i in 1:length(SIVFiles)){
                       
                       
                       #mutation frequencies of all transversion mutataions
-                      if (SeqData$MajNt[k]=="a"|SeqData$MajNt[k]=='g'){
-                                TrvMutNum<-SeqData[k,"c"]+SeqData[k,"t"]}
-                      if (SeqData$MajNt[k]=="c"|SeqData$MajNt[k]=="t"){
-                                TrvMutNum<-SeqData[k,"a"]+SeqData[k,"g"]}
-                      SeqData$freq.transv[k]<-TrvMutNum/SeqData$TotalReads[k]
-                      if (SeqData$ref[k]=="a"|SeqData$ref[k]=='g'){
-                              TrvMutNum2<-SeqData[k,"c"]+SeqData[k,"t"]}
-                      if (SeqData$ref[k]=="c"|SeqData$ref[k]=="t"){
-                              TrvMutNum2<-SeqData[k,"a"]+SeqData[k,"g"]}
-                      SeqData$freq.transv.ref[k]<-TrvMutNum2/SeqData$TotalReads[k]
+                      #if (SeqData$MajNt[k]=="a"|SeqData$MajNt[k]=='g'){
+                      #          TrvMutNum<-SeqData[k,"c"]+SeqData[k,"t"]}
+                      #if (SeqData$MajNt[k]=="c"|SeqData$MajNt[k]=="t"){
+                      #          TrvMutNum<-SeqData[k,"a"]+SeqData[k,"g"]}
+                      #SeqData$freq.transv[k]<-TrvMutNum/SeqData$TotalReads[k]
+                      #if (SeqData$ref[k]=="a"|SeqData$ref[k]=='g'){
+                      #        TrvMutNum2<-SeqData[k,"c"]+SeqData[k,"t"]}
+                      #if (SeqData$ref[k]=="c"|SeqData$ref[k]=="t"){
+                      #        TrvMutNum2<-SeqData[k,"a"]+SeqData[k,"g"]}
+                      #SeqData$freq.transv.ref[k]<-TrvMutNum2/SeqData$TotalReads[k]
                       
                       #Frequenceis for specific transversion mutations (1 & 2)
                       Tvs1Num<-SeqData[k,which(c("a","c","g","t")==(transv1(SeqData$MajNt[k])))]
@@ -85,9 +86,17 @@ for (i in 1:length(SIVFiles)){
                       SeqData$freq.transv2[k]<-Tvs2Num/SeqData$TotalReads[k]
                       Tvs1rNum<-SeqData[k,which(c("a","c","g","t")==(transv1(SeqData$ref[k])))]
                       Tvs2rNum<-SeqData[k,which(c("a","c","g","t")==(transv2(SeqData$ref[k])))]
-                      SeqData$freq.transv1.ref[k]<-Tvs1Num/SeqData$TotalReads[k]
-                      SeqData$freq.transv2.ref[k]<-Tvs2Num/SeqData$TotalReads[k]
-
+                      SeqData$freq.transv1.ref[k]<-Tvs1rNum/SeqData$TotalReads[k]
+                      SeqData$freq.transv2.ref[k]<-Tvs2rNum/SeqData$TotalReads[k]
+                      
+                      #mutation frequencies of all transversion mutataions
+                      #if (SeqData$MajNt[k]=="a"|SeqData$MajNt[k]=='g'){
+                      #          TrvMutNum<-SeqData[k,"c"]+SeqData[k,"t"]}
+                      #if (SeqData$MajNt[k]=="c"|SeqData$MajNt[k]=="t"){
+                      #          TrvMutNum<-SeqData[k,"a"]+SeqData[k,"g"]}
+                      SeqData$freq.transv[k]<-SeqData$freq.transv1[k]+SeqData$freq.transv2[k]
+                      SeqData$freq.transv.ref[k]<-SeqData$freq.transv1.ref[k]+ SeqData$freq.transv2.ref[k]
+                      
                       
                       #Frequencies of all SNPs (no indels)
                       AllMutNum<-SeqData$TotalReads[k]-MajNum

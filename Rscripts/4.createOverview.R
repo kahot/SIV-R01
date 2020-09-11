@@ -29,6 +29,7 @@ for (i in 1:length(SIVFiles_SeqData)){
                         mutant1codon<-c('n','n','n')
                         mutant2codon<-c('n','n','n')
                         mutant3codon<-c('n','n','n')
+                        
                         mutant1codon.tv1 <- c('n','n','n')
                         mutant2codon.tv1 <- c('n','n','n')
                         mutant3codon.tv1 <-c('n','n','n')
@@ -36,20 +37,6 @@ for (i in 1:length(SIVFiles_SeqData)){
                         mutant1codon.tv2 <- c('n','n','n')
                         mutant2codon.tv2 <- c('n','n','n')
                         mutant3codon.tv2 <- c('n','n','n')
-                        
-                        ##compare to the ref seq
-                        #mutant1codon2 <- c('n','n','n')
-                        #mutant2codon2 <- c('n','n','n')
-                        #mutant3codon2 <- c('n','n','n')
-                        #
-                        ##transversion mutation to 'a' or 'c'
-                        #mutant1codon2.tv1 <- c('n','n','n')
-                        #mutant2codon2.tv1 <- c('n','n','n')
-                        #mutant3codon2.tv1 <- c('n','n','n')
-                        ##transversion mutatioc
-                        #mutant1codon2.tv2 <- c('n','n','n')
-                        #mutant2codon2.tv2 <- c('n','n','n')
-                        #mutant3codon2.tv2 <- c('n','n','n')
                     }
                     
                 else {                        
@@ -65,21 +52,21 @@ for (i in 1:length(SIVFiles_SeqData)){
                         mutant1codon.tv2 <- c(transv2(WTcodon[1]), WTcodon[2:3])  
                         mutant2codon.tv2 <- c(WTcodon[1],transv2(WTcodon[2]), WTcodon[3])
                         mutant3codon.tv2 <- c(WTcodon[1:2], transv2(WTcodon[3]))
-                        
-                        #compare to the ref seq
-                        mutant1codon2 <- c(transition(Refcodon[1]), Refcodon[2:3])  #If the first position has transistion mutation, it's labeld as mutatnt1codon.
-                        mutant2codon2 <- c(Refcodon[1],transition(Refcodon[2]), Refcodon[3])
-                        mutant3codon2 <- c(Refcodon[1:2], transition(Refcodon[3]))
-                        
-                        #transversion mutation to 'a' or 'c'
-                        mutant1codon2.tv1 <- c(transv1(Refcodon[1]), Refcodon[2:3]) 
-                        mutant2codon2.tv1 <- c(Refcodon[1],transv1(Refcodon[2]), Refcodon[3])
-                        mutant3codon2.tv1 <- c(Refcodon[1:2], transv1(Refcodon[3]))
-                        #transversion mutation to 'g' or 't'
-                        mutant1codon2.tv2 <- c(transv2(Refcodon[1]), Refcodon[2:3])  
-                        mutant2codon2.tv2 <- c(Refcodon[1],transv2(Refcodon[2]), Refcodon[3])
-                        mutant3codon2.tv2 <- c(Refcodon[1:2], transv2(Refcodon[3]))
                 }
+                #compare to the ref seq
+                mutant1codon2 <- c(transition(Refcodon[1]), Refcodon[2:3])  #If the first position has transistion mutation, it's labeld as mutatnt1codon.
+                mutant2codon2 <- c(Refcodon[1],transition(Refcodon[2]), Refcodon[3])
+                mutant3codon2 <- c(Refcodon[1:2], transition(Refcodon[3]))
+                
+                #transversion mutation to 'a' or 'c'
+                mutant1codon2.tv1 <- c(transv1(Refcodon[1]), Refcodon[2:3]) 
+                mutant2codon2.tv1 <- c(Refcodon[1],transv1(Refcodon[2]), Refcodon[3])
+                mutant3codon2.tv1 <- c(Refcodon[1:2], transv1(Refcodon[3]))
+                #transversion mutation to 'g' or 't'
+                mutant1codon2.tv2 <- c(transv2(Refcodon[1]), Refcodon[2:3])  
+                mutant2codon2.tv2 <- c(Refcodon[1],transv2(Refcodon[2]), Refcodon[3])
+                mutant3codon2.tv2 <- c(Refcodon[1:2], transv2(Refcodon[3]))
+                
 
                 
                 TypeOfSite<-c(TypeOfSite,typeofsitefunction(WTcodon,mutant1codon))
