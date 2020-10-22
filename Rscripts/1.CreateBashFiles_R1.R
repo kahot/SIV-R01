@@ -6,23 +6,24 @@ fq<-list.files("~/programs/BaseSpace/B670_Run_3-142079938/", pattern="fastq.gz$"
 fq<-list.files("~/programs/BaseSpace/B670_Run_2-123312015/", pattern="fastq.gz$",recursive = T) 
 fq<-list.files("~/programs/BaseSpace/Ambrose_B670-2-77614630/", pattern="fastq.gz$",recursive = T) 
 fq<-list.files("~/programs/BaseSpace/Ambrose1-41042018/", pattern="fastq.gz$",recursive = T) 
-
+fq<-list.files("~/programs/BaseSpace/Youya_Comp_Assay_and_B670_repeats-197798601/", pattern="fastq.gz$",recursive = T) 
 
 
 #create a list of file names:
 n<-seq(1, by = 2, len = (length(fq)/2))
 fq2<-fq[n]
-flist<-data.frame(matrix(nrow=23, ncol=1))
+flist<-data.frame(matrix(nrow=7, ncol=1))
 for (i in 1:length(fq2)){
     #choose the paired reads fastq files
     fa1<-fq2[i]
     fname1<-sub(".*/", "", fa1)
-    fname<-paste0("Run1_", substr(fname1, 1,2))
+    fname<-paste0("Run4_", substr(fname1, 1,2))
     flist[i,1]<-fname
 }
 write.csv(flist,"Data/Run1_filenames.csv")
 write.csv(flist,"Data/Run3_filenames.csv")
 write.csv(flist,"Data/Run2_filenames.csv")
+write.csv(flist,"Data/Run4_filenames.csv")
 
 ##### 
 #Select samples
@@ -63,16 +64,18 @@ cmmd<-readLines("Data/template/Bashxx.sh")
 
 #choose the fastq files to be prrocessed
 fq<-list.files("~/programs/BaseSpace/", pattern="fastq.gz$",recursive = T) 
+fq<-list.files("~/programs/BaseSpace/Youya_Comp_Assay_and_B670_repeats-197798601/", pattern="fastq.gz$",recursive = T) 
 
 
 #dir.create("Data/Bashscripts/")
+#create a list of file names:
 
 #create vector of odd numbers:
 n<-seq(1, by = 2, len = (length(fq)/2))
 fq2<-fq[n]
 for (i in 1:length(fq2)){
   #choose the paired reads fastq files
-  fa1<-fq2[i]
+  fa1<-paste0("Youya_Comp_Assay_and_B670_repeats-197798601/",fq2[i])
   fa2<-gsub(pattern="R1",replace="R2",x=fa1)
   fname1<-sub(".*/", "", fa1)
   fname2<-substr(fa1,start=1,stop=10)
@@ -80,17 +83,33 @@ for (i in 1:length(fq2)){
   if (fname2=="B670_Run_2") fname<- paste0("Run2_", substr(fname1, 1,2))
   if (fname2=="B670_Run_3") fname<- paste0("Run3_", substr(fname1, 1,2))
   if (fname2=="FASTQ_Gene") fname<- paste0("Run0_", substr(fname1, 1,2))
+  if (fname2=="Youya_Comp") fname<- paste0("Run4_", substr(fname1, 1,2))
   
   new<-gsub(pattern="10_S10_L001_R1_001.fastq", replace=paste0(fa1),x=cmmd)
   new<-gsub(pattern="10_S10_L001_R2_001.fastq", replace=paste0(fa2),x=new)
   new<-gsub(pattern="M10",replace=paste0(fname),x=new)
-  #writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
-  writeLines(new, con=paste0("Data/Bash1/",fname,".sh"))
+  writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
+  #writeLines(new, con=paste0("Data/Bash1/",fname,".sh"))
   
 }
 
 
-
+## for the last 5 files
+fq<-list.files("Data/fastq/",pattern="fastq.gz$" )
+sc<-readLines("Data/template/Bashxx2.sh")
+for (i in 1:length(fq2)){
+    #choose the paired reads fastq files
+    fa1<-fq2[i]
+    fa2<-gsub(pattern="R1",replace="R2",x=fa1)
+    fname1<-sub(".*/", "", fa1)
+    fname<- paste0("Run3_", substr(fname1, 1,2))
+    new<-gsub(pattern="10_S10_L001_R1_001.fastq", replace=paste0(fa1),x=sc)
+    new<-gsub(pattern="10_S10_L001_R2_001.fastq", replace=paste0(fa2),x=new)
+    new<-gsub(pattern="M10",replace=paste0(fname),x=new)
+    writeLines(new, con=paste0("Data/Bashscripts/",fname,".sh"))
+    #writeLines(new, con=paste0("Data/Bash1/",fname,".sh"))
+    
+}
 
 
 ##### Map raw R2 to SIV2 to look for Primer IDs

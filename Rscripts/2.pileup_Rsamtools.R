@@ -18,7 +18,7 @@ for (i in 1:length(bamfiles)){
 
         file.name<-paste(bam)
         file.name<-substr(file.name,start=1,stop=7 )
-        p_param <- PileupParam(max_depth=70000)
+        p_param <- PileupParam(max_depth=300000)
         result<-pileup(bf, pileupParam = p_param, distinguish_strands=FALSE,ignore_query_Ns=FALSE)
         summary<-pileupFreq(result)
 

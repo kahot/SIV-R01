@@ -23,7 +23,7 @@ for (i in 1:length(SIVFiles_overview)){
 
 # Plot mutation freq across the genome for each week by monkeys
 
-samples<-read.csv("Data/Samples.csv",stringsAsFactors = F)
+samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
 
 list.animal<-split(samples, samples$Monkey)
 
@@ -63,7 +63,8 @@ for (i in 1:length(monkeyList)){
 }
 
 ######   #Plot the stock virus ######
-df<-Overview[[9]]
+
+df<-Overview[[which(names(Overview)=="Run0_17")]]
 ggplot(data=df, aes(x=pos, y=freq.Ts.ref))+
     ylab("Mutation frequency")+xlab("")+
     geom_point(size=0.7, color=col)+theme_bw()+
@@ -74,27 +75,27 @@ ggsave("Output/Stock_mf.pdf", width = 7, height = 2)
 
 
 #Plot minor variant freq
-for (i in 1:length(monkeyList)){
-    sample<-monkeyList[[i]]
-    sample<-sample[order(sample$Week),]
-    ovDF<-Overview[as.vector(sample$File.name)]
-    monkey<-names(monkeyList)[i]
-    
-    Plot<-list()
-    for (j in 1:length(ovDF)){
-        df<-ovDF[[j]]
-        week<-sample$Week[j]
-        if (week<=17) col=cols[2]
-        else {col=cols2[1]}
-        Plot[[j]]<-ggplot(data=df, aes(x=pos, y=freq.Ts))+
-            ylab("Mutation frequency")+xlab("")+ylim(0,0.5)+
-            geom_point(size=0.7, color=col)+theme_bw()+
-            ggtitle(paste0(monkey," Week ",week))+theme(plot.title = element_text(size=12))
-    }
-    pdf(paste0("Output/MF/",monkey,".maj.pdf"), width = 7, height = length(ovDF)*2)
-    do.call(grid.arrange, c(Plot, ncol=1))
-    dev.off()
-}
+#for (i in 1:length(monkeyList)){
+#    sample<-monkeyList[[i]]
+#    sample<-sample[order(sample$Week),]
+#    ovDF<-Overview[as.vector(sample$File.name)]
+#    monkey<-names(monkeyList)[i]
+#    
+#    Plot<-list()
+#    for (j in 1:length(ovDF)){
+#        df<-ovDF[[j]]
+#        week<-sample$Week[j]
+#        if (week<=17) col=cols[2]
+#        else {col=cols2[1]}
+#        Plot[[j]]<-ggplot(data=df, aes(x=pos, y=freq.Ts))+
+#            ylab("Mutation frequency")+xlab("")+ylim(0,0.5)+
+#            geom_point(size=0.7, color=col)+theme_bw()+
+#            ggtitle(paste0(monkey," Week ",week))+theme(plot.title = element_text(size=12))
+#    }
+#    pdf(paste0("Output/MF/",monkey,".maj.pdf"), width = 7, height = length(ovDF)*2)
+#    do.call(grid.arrange, c(Plot, ncol=1))
+#    dev.off()
+#}
 
 # Plot all mutation freq
 for (i in 1:length(monkeyList)){
@@ -123,7 +124,7 @@ for (i in 1:length(monkeyList)){
 
 ###### 
 ## Add nucleotide to the position info
-i==3,5,6
+
 for (i in 1:length(monkeyList)){
     sample<-monkeyList[[i]]
     sample = sample[order(sample[,'Week'],-sample[,'Run']),]

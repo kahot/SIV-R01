@@ -10,7 +10,7 @@ source("Rscripts/baseRscript2.R")
 source("Rscripts/alignment2Fasta.R")
 #hcl_palettes(plot = TRUE)
 cols2<-qualitative_hcl(6, palette="Dark3")
-cols2<-qualitative_hcl(5,palette="Set2")
+#cols2<-qualitative_hcl(5,palette="Set2")
 
 
 # read the files saved in Overview_output:
@@ -20,7 +20,7 @@ coln<-c('QNAME','Flag','RefName','Pos','MapQ','cigar','MRNM','Mpos','isize','seq
 reference<-read.dna("Data/AY032751.fasta", format = "fasta",as.character=TRUE)
 referF<-reference[1:480]
 referF<-paste0(toupper(referF), collapse = '')
-referR<-reference[499:720]
+referR<-reference[400:720]
 referR<-paste0(toupper(referR), collapse = '')
 
 #variable positions
@@ -48,7 +48,7 @@ for (id in 1:length(ids)){
     monkey1<-samples$File.name[samples$Monkey==monkey]
     files<-substr(samfiles, 1, 7)
     Is<-which(files %in% monkey1)
-    dir.create(paste0("Output/reads/",monkey,"/"))
+    #dir.create(paste0("Output/reads/",monkey,"/"))
     
     for (k in 1:length(Is)){
         i<-Is[k]
@@ -57,18 +57,18 @@ for (id in 1:length(ids)){
         fname<-substr(samfiles[i],1,7)
         print(fname)
         sam<-subset(sam, MapQ>9&MapQ<61) 
-        samF<-sam[sam$Pos<200,]
-        samR<-sam[sam$Pos>490,]
-        seqF<-samF[sample(nrow(samF), 20),]
+    #    samF<-sam[sam$Pos<200,]
+        samR<-sam[sam$Pos>400,]
+    #    seqF<-samF[sample(nrow(samF), 20),]
         seqR<-samR[sample(nrow(samR), 20),]
-        
-        readsF<-seqF$seq
-        readsF<-c(referF,readsF)
-        dnaF<-DNAStringSet(readsF)
-        names(dnaF)<-c("ref", paste0(fname,"_F_",1:20))
-        alignF<-msa(dnaF)
-        alignment2Fasta(alignF, paste0("Output/reads/", monkey,"/", fname, "_F_.fasta"))
-        
+    #    
+    #    readsF<-seqF$seq
+    #    readsF<-c(referF,readsF)
+    #    dnaF<-DNAStringSet(readsF)
+    #    names(dnaF)<-c("ref", paste0(fname,"_F_",1:20))
+    #    alignF<-msa(dnaF)
+    #    alignment2Fasta(alignF, paste0("Output/reads/", monkey,"/", fname, "_F_.fasta"))
+    #    
         readsR<-seqR$seq
         readsR<-c(referR,readsR)
         dnaR<-DNAStringSet(readsR)
@@ -76,7 +76,13 @@ for (id in 1:length(ids)){
         alignR<-msa(dnaR)
         alignment2Fasta(alignR, paste0("Output/reads/", monkey,"/", fname, "_R_.fasta"))
     }
+}
     
+
+
+for (id in 2:length(ids)){
+    monkey<-ids[id]
+
     #read the fasta files
     Forward<-list.files(paste0("Output/reads/", monkey,"/"), pattern="F_.fasta")
     Rev<-list.files(paste0("Output/reads/", monkey,"/"), pattern="R_.fasta")
@@ -97,22 +103,22 @@ for (id in 1:length(ids)){
                 j=j+1}
         }
         
-        readsR<-read.dna(paste0("Output/reads/",monkey,"/", Rev[m]), format = "fasta",as.character=TRUE)
-        readsR<-data.frame(readsR, stringsAsFactors = F)
-        ins<-which(readsR["ref",]=="-")
-        k=499
-        j=1
-        for (i in 1:ncol(readsR)){
-            if (!i %in% ins) {
-                colnames(readsR)[i]<-k
-                k<-k+1}
-            if (i %in% ins){
-                colnames(readsR)[i]<-paste0("gr",j)
-                j=j+1}
-        }
+        #readsR<-read.dna(paste0("Output/reads/",monkey,"/", Rev[m]), format = "fasta",as.character=TRUE)
+        #readsR<-data.frame(readsR, stringsAsFactors = F)
+        #ins<-which(readsR["ref",]=="-")
+        #k=400
+        #j=1
+        #for (i in 1:ncol(readsR)){
+        #    if (!i %in% ins) {
+        #        colnames(readsR)[i]<-k
+        #        k<-k+1}
+        #    if (i %in% ins){
+        #        colnames(readsR)[i]<-paste0("gr",j)
+        #        j=j+1}
+        #}
         
         posF<-positions[positions<=480]
-        mutF<-readsF[,paste(posF)]
+        mutF<-readsF[,paste0(posF)]
         refF<-mutF["ref",]
         mutF<-mutF[-which(rownames(mutF)=="ref"),]
         mutF<-rbind(refF,mutF) 
@@ -131,33 +137,33 @@ for (id in 1:length(ids)){
                   plot.title = element_text(size=10))+
             geom_vline(xintercept=c(.5,(seq(3, ncol(mutF), 3)+.5)), color="gray50")+
             scale_fill_manual(values=c("white","gray90",cols2))+
-            ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]))
+            ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]," (",fname,")" ))
         ggsave(paste0("Output/reads/",monkey,"/",fname,"F.pdf"), height = 3, width = 5)
         
         
-        posR<-positions[positions>=499]
-        mutR<-readsR[,paste(posR)]
-        refR<-mutR["ref",]
-        mutR<-mutR[-which(rownames(mutR)=="ref"),]
-        mutR<-rbind(refR,mutR) 
-        for (i in 1:ncol(mutR)){
-            mutR[2:nrow(mutR),i]<-sapply(mutR[2:nrow(mutR),i], function(x) if (x==mutR[1,i]) x<-"." else x=x)
-        }
-        
-        mutR$id<-rownames(mutR)
-        mutRm<-melt(mutR, id.vars = "id")
-        colnames(mutRm)[2:3]<-c("Pos","Nuc")
-        mutRm$Nuc<-factor(mutRm$Nuc, levels=c("-",".","a","c","g","t"))
-        ggplot(mutRm, aes(x=Pos,y=id, fill=factor(Nuc)))+
-            geom_tile(color="gray70")+ylab('')+xlab('')+
-            theme(axis.text.x = element_text(angle = 90, size=6),
-                  axis.text.y = element_text(size=6),
-                  legend.title=element_blank(),
-                  plot.title = element_text(size=10))+
-            geom_vline(xintercept=c(.5,(seq(3, ncol(mutR), 3)+.5)), color="gray50")+
-            scale_fill_manual(values=c("white","gray90",cols2))+
-            ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]))
-        ggsave(paste0("Output/reads/",monkey,"/",fname,"R.pdf"), height = 3, width = 4.5)
+        #posR<-positions[positions>=480]
+        #mutR<-readsR[,paste(posR)]
+        #refR<-mutR["ref",]
+        #mutR<-mutR[-which(rownames(mutR)=="ref"),]
+        #mutR<-rbind(refR,mutR) 
+        #for (i in 1:ncol(mutR)){
+        #    mutR[2:nrow(mutR),i]<-sapply(mutR[2:nrow(mutR),i], function(x) if (x==mutR[1,i]) x<-"." else x=x)
+        #}
+        #
+        #mutR$id<-rownames(mutR)
+        #mutRm<-melt(mutR, id.vars = "id")
+        #colnames(mutRm)[2:3]<-c("Pos","Nuc")
+        #mutRm$Nuc<-factor(mutRm$Nuc, levels=c("-",".","a","c","g","t"))
+        #ggplot(mutRm, aes(x=Pos,y=id, fill=factor(Nuc)))+
+        #    geom_tile(color="gray70")+ylab('')+xlab('')+
+        #    theme(axis.text.x = element_text(angle = 90, size=6),
+        #          axis.text.y = element_text(size=6),
+        #          legend.title=element_blank(),
+        #          plot.title = element_text(size=10))+
+        #    geom_vline(xintercept=c(.5,(seq(3, ncol(mutR), 3)+.5)), color="gray50")+
+        #    scale_fill_manual(values=c("white","gray90",cols2))+
+        #    ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]," (",fname,")" ))
+        #ggsave(paste0("Output/reads/",monkey,"/",fname,"R.pdf"), height = 3, width = 4.5)
         
     }
 }   
@@ -170,7 +176,7 @@ for (id in 1:length(ids)){
 ## A21918 reverse didn't align well:  adjust the start & try
 #for (k in 1:length(Is)){ k=1,3,6
 
-#monkey=ids[1]
+monkey=ids[6]
 #monkey=ids[5]
 monkey1<-samples$File.name[samples$Monkey==monkey]
 files<-substr(samfiles, 1, 7)
@@ -178,7 +184,7 @@ Is<-which(files %in% monkey1)
 
 referR2<-reference[400:720]
 referR2<-paste0(toupper(referR2), collapse = '')
-
+k=6
 for (k in 1:length(Is)){
     i<-Is[k]
     sam<-read.table(paste0("Output/sam/",samfiles[i]),skip=3, col.names=coln, sep = "\t",fill=T, comment.char="",quote= "", stringsAsFactors = F)
@@ -195,9 +201,9 @@ for (k in 1:length(Is)){
     dnaR<-DNAStringSet(readsR)
     names(dnaR)<-c("ref", paste0(fname,"_R_",1:20))
     alignR<-msa(dnaR)
-    alignment2Fasta(alignR, paste0("Output/reads/", monkey,"/", fname, "2_R_.fasta"))
+    alignment2Fasta(alignR, paste0("Output/reads/", monkey,"/", fname, "_R_.fasta"))
 }
-Rev<-list.files(paste0("Output/reads/", monkey,"/"), pattern="2_R_.fasta")
+Rev<-list.files(paste0("Output/reads/", monkey,"/"), pattern="22_R_.fasta")
     
 for (m in 1:length(Rev)){
     readsR<-read.dna(paste0("Output/reads/", monkey,"/",Rev[m]), format = "fasta",as.character=TRUE)
@@ -215,7 +221,7 @@ for (m in 1:length(Rev)){
             j=j+1}
     }
     
-    posR<-positions[positions>=499]
+    posR<-positions[positions>=480]
     mutR<-readsR[,paste(posR)]
     refR<-mutR["ref",]
     mutR<-mutR[-which(rownames(mutR)=="ref"),]
@@ -236,9 +242,10 @@ for (m in 1:length(Rev)){
               plot.title = element_text(size=10))+
         geom_vline(xintercept=c(.5,(seq(3, ncol(mutR), 3)+.5)), color="gray50")+
         scale_fill_manual(values=c("white","gray90",cols2))+
-        ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]))
+        ggtitle(paste0(monkey," Week ",samples$Week[samples$File.name==fname]," (",fname,")" ))
     ggsave(paste0("Output/reads/",monkey,"/",fname,"R.pdf"), height = 3, width = 4.5)
-}
+    
+    }
     
     
     

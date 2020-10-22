@@ -24,8 +24,8 @@ for (i in 1:length(SIVFiles_overview)){
 
 
 ######   #Plot the stock virus ######
-#names(Overview)[9] Stock is Run0_17
-stock<-Overview[[9]]
+# Stock is Run0_17
+stock<-Overview[[which(names(Overview)=="Run0_17")]]
 Ps<-ggplot(data=stock, aes(x=pos, y=freq.Ts.ref))+
     ylab("Mutation frequency")+xlab("")+ylim(0,1)+
     geom_point(size=0.7, color=cols2[4])+theme_bw()+
@@ -45,7 +45,7 @@ tbs<-data.frame(cbind(ids,tb))
 tbs$tb<-as.numeric(as.character(tbs$tb))
 
 
-samples<-read.csv("Data/Samples.csv",stringsAsFactors = F)
+samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
 list.animal<-split(samples, samples$Monkey)
 monkeyList<-list()
 k=1
@@ -100,20 +100,21 @@ for (i in 1:length(monkeys2)){
             geom_point(size=0.7, color=col)+theme_bw()+
             ggtitle(paste0(monkey," Week ",week))+theme(plot.title = element_text(size=12))
     }
-    pdf(paste0("Output/MF/",monkey,".stock.nodup.pdf"), width = 7, height = length(ovDF)*2)
-    do.call(grid.arrange, c(Plot, ncol=1))
-    dev.off()
+    #pdf(paste0("Output/MF/",monkey,".stockp.pdf"), width = 7, height = length(ovDF)*2)
+    #do.call(grid.arrange, c(Plot, ncol=1))
+    #dev.off()
     
     tbweek<-tbs$tb[tbs$ids==monkey]
     ggplot(data=Tsm, aes(x=Week, y=MF))+
         ylab("Mutation frequency")+xlab("Weeks")+
         facet_wrap(~ Position, nrow=rown, ncol=5)+
         geom_point(size=2, color=cols2[1])+theme_bw()+ggtitle(paste(monkey))+
-        geom_vline(xintercept=tbweek, col="blue")+
-        ggsave(paste0("Output/Timeseries2/", monkey, ".pdf"), heigh=rown*2, width =10)
+        geom_vline(xintercept=tbweek, col="blue")
+    #+
+    #    ggsave(paste0("Output/Timeseries2/", monkey, ".pdf"), heigh=rown*2, width =10)
 }
 
-#Find the over lapping positions
+#Find the overlapping positions
 positions<-unique(unlist(unname(Pos)))
 positions<-positions[order(positions)]
 cpos<-data.frame(Pos=positions)
@@ -123,7 +124,7 @@ for (i in 1:length(monkeys2)){
     cpos[,names(monkeys2)[i]]<-apply(cpos['Pos'],2, function(x) ifelse(x %in% vec, "Y", "N"))
 }
 
-write.csv(cpos, "Output/HighMutfreq_overtime.csv")
+#write.csv(cpos, "Output/HighMutfreq_overtime.csv")
 cpos$codon<-apply(cpos["Pos"], 1, function(x) if(x%%3==0) x=3 else x=x%%3)
 
 
@@ -141,6 +142,7 @@ write.csv(cpos, "Output/HighMutfreq_sites.csv")
 Pos<-list()
 PosType<-list()
 for (i in 1:length(monkeys2)){
+    print(ids[i])
     sample<-monkeys2[[i]]
     sample = sample[order(sample[,'Week'],-sample[,'Run']),]
     sample = sample[!duplicated(sample$Week),]
@@ -184,16 +186,20 @@ for (i in 1:length(monkeys2)){
     
     #Tranv1
     Tv1<-unname(sapply(mfDF2, `[[`, "freq.transv1.ref"))
-    if (length(Tv1)==length(sample$Week)) Tv1<-data.frame(Tv1)
-    else { Tv1<-data.frame(t(Tv1)) }
+    if (nrow(mfDF2[[1]])==1) Tv1<-data.frame(Tv1)
+    else { 
+    Tv1<-data.frame(t(Tv1)) 
+    }
     nt2<-mfDF2[[1]][,"ref"]
     colnames(Tv1)<-paste0("Pos_",sites1, ' ',nt2, ' Tv1')
     Tv1<-InsertRow(Tv1, c(stock$freq.transv1.ref[stock$pos %in% sites1]), RowNum=1)
     
     #Tranv2
     Tv2<-unname(sapply(mfDF3, `[[`, "freq.transv2.ref"))
-    if (length(Tv2)==length(sample$Week)) Tv2<-data.frame(Tv2)
-    else { Tv2<-data.frame(t(Tv2))}
+    if (nrow(mfDF3[[1]])==1) Tv2<-data.frame(Tv2)
+    else { 
+        Tv2<-data.frame(t(Tv2))
+        }
     
     nt3<-mfDF3[[1]][,"ref"]
     colnames(Tv2)<-paste0("Pos_",sites2, ' ',nt3, ' Tv2')
@@ -229,7 +235,7 @@ for (i in 1:length(monkeys2)){
             ggtitle(paste0(monkey," Week ",week))+theme(plot.title = element_text(size=12))
     
     }
-    pdf(paste0("Output/MF/All.",monkey,".stock.nodup.pdf"), width = 7, height = length(ovDF)*2)
+    pdf(paste0("Output/MF/All.",monkey,".stock.pdf"), width = 7, height = length(ovDF)*2)
     do.call(grid.arrange, c(Plot, ncol=1))
     dev.off()
     

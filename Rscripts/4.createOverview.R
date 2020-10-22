@@ -7,8 +7,10 @@ source("Rscripts/BaseRscript2.R")
 SIVFiles_SeqData<-list.files("Output/SeqData/",pattern="SeqData")
 #SIVFiles_SeqData<-SIVFiles_SeqData[s2]
 
+#vec=c(29:31,33:36)
 Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   
+#for (i in vec){   
         id<-substr(paste(SIVFiles_SeqData[i]),start=9,stop=15)
         print(id)
         OverviewDF<-read.csv(paste0("Output/SeqData/",SIVFiles_SeqData[i]),row.names = 1, stringsAsFactors=FALSE)
@@ -114,6 +116,7 @@ for (i in 1:length(SIVFiles_SeqData)){
 #mutrates1<-read.csv("Data/HIVMutRates.csv")
 
 Overview_sum<-list()
+#for (i in vec){
 for (i in 1:length(Overview)){
 
         OverviewDF<-Overview[[i]]
@@ -202,6 +205,21 @@ for (i in 1:length(Overview)){
         OverviewDF[remove, 7:16]<-NA
         write.csv(OverviewDF,paste0("Output/OverviewF/",id,"_filtered.overview.csv"))
 }
+
+
+#Filter at 5000 for Run4
+SIVFiles_overview<-list.files("Output/Overview/",pattern="Run4.*_overview.csv")
+
+for (i in 1:length(SIVFiles_overview)){ 
+    overview<-read.csv(paste0("Output/Overview/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
+    remove<-which(overview$TotalReads<5000)
+    overview[remove, 7:16]<-NA
+    id<-substr(paste(SIVFiles_overview[i]),start=1,stop=7)
+    write.csv(OverviewDF,paste0("Output/OverviewF/",id,"_filtered.overview.csv"))
+}
+
+
+
 
 
 #####################################
