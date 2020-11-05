@@ -13,14 +13,14 @@ bamfiles<-list.files("~/programs/PID-master/Bam/",pattern="bam$")
 #s2<-c(20,32)
 #bamfiles<-bamfiles[s2]
 
-for (i in 2:length(bamfiles)){
+for (i in 1:length(bamfiles)){
         bam<-bamfiles[i]
         index<-paste0("~/programs/PID-master/Bam/",bam,'.bai')
         bf<-BamFile(paste0("~/programs/PID-master/Bam/",bam), index=index)
 
         file.name<-paste(bam)
         file.name<-substr(file.name,start=1,stop=7 )
-        p_param <- PileupParam(max_depth=50000,include_insertions=TRUE)
+        p_param <- PileupParam(max_depth=50000,include_insertions=TRUE,include_deletions=TRUE)
         result<-pileup(bf, pileupParam = p_param, distinguish_strands=FALSE,ignore_query_Ns=FALSE)
         summary<-pileupFreq(result)
 

@@ -4,16 +4,16 @@ library(dplyr)
 source("Rscripts/BaseRscript2.R")
 
 #get the file name
-SIVFiles_SeqData<-list.files("Output/SeqData/",pattern="SeqData")
+SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="SeqData")
 #SIVFiles_SeqData<-SIVFiles_SeqData[s2]
 
-#vec=c(75:81)
+#vec=c(29:31,33:36)
 Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   
 #for (i in vec){   
         id<-substr(paste(SIVFiles_SeqData[i]),start=9,stop=15)
         print(id)
-        OverviewDF<-read.csv(paste0("Output/SeqData/",SIVFiles_SeqData[i]),row.names = 1, stringsAsFactors=FALSE)
+        OverviewDF<-read.csv(paste0("Output/SeqData_PID/",SIVFiles_SeqData[i]),row.names = 1, stringsAsFactors=FALSE)
                 
         TypeOfSite<-c() 
         TypeOfSite.tv1<-c()
@@ -198,12 +198,12 @@ for (i in 1:length(Overview)){
         } 
         
       
-        write.csv(OverviewDF,paste0("Output/Overview/",id,"_overview.csv"))
+        write.csv(OverviewDF,paste0("Output/Overview_PID/",id,"_overview.csv"))
         
         #filter the sites with reads<10000
-        remove<-which(OverviewDF$TotalReads<10000)
+        remove<-which(OverviewDF$TotalReads<1000)
         OverviewDF[remove, 7:16]<-NA
-        write.csv(OverviewDF,paste0("Output/OverviewF/",id,"_filtered.overview.csv"))
+        write.csv(OverviewDF,paste0("Output/OverviewF_PID/",id,"_filtered.overview.csv"))
 }
 
 
@@ -291,11 +291,11 @@ write.csv(OverviewDF,"Output/Overview.ref.csv")
 
 ###############################       
 # mean read depth
-overviews<-list.files("Output/Overview/",pattern="overview.csv")
+overviews<-list.files("Output/Overview_PID/",pattern="overview.csv")
 
-Ove<-list()
 for (i in 1:length(overviews)){ 
-    cm<-mean(df$TotalReads, na.rm=T)
+    df<-read.csv(paste0("Output/Overview_PID/",overviews[i]), row.names = 1)
+    m<-mean(df$TotalReads, na.rm=T)
     print(substr(paste(overviews[i]),start=1,stop=7))
     print(m)
     #Ove[[i]]<-df

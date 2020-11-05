@@ -1,5 +1,5 @@
 library(ggplot2)
-library(reshape)
+library(reshape2)
 library(ggpubr)
 library(ggthemes)
 library(plotrix)
@@ -11,11 +11,12 @@ library(DataCombine)
 source("Rscripts/baseRscript2.R")
 cols2<-qualitative_hcl(6, palette="Dark3")
 
-# read the Overview files:
-SIVFiles_overview<-list.files("Output/OverviewF/",pattern="filtered.overview.csv")
+# read the files saved in Overview_output:
+SIVFiles_overview<-list.files("Output/OverviewF_PID/",pattern="filtered.overview.csv")
+
 Overview<-list()
 for (i in 1:length(SIVFiles_overview)){ 
-        overviews<-read.csv(paste0("Output/OverviewF/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
+        overviews<-read.csv(paste0("Output/OverviewF_PID/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
         Overview[[i]]<-overviews
         names(Overview)[i]<-substr(paste(SIVFiles_overview[i]),start=1,stop=7)
 }
@@ -29,7 +30,7 @@ Ps<-ggplot(data=stock, aes(x=pos, y=freq.Ts.ref))+
     ylab("Mutation frequency")+xlab("")+ylim(0,1)+
     geom_point(size=0.7, color=cols2[4])+theme_bw()+
     ggtitle("Stock")+theme(plot.title = element_text(size=12))
-ggsave("Output/Stock_mf.pdf", width = 7, height = 2)
+ggsave("Output/Stock_mf_PID.pdf", width = 7, height = 2)
 
 s2<-stock[stock$freq.mutations.ref>=0.1,]
 
@@ -244,7 +245,7 @@ for (i in 1:length(monkeys2)){
         facet_wrap(~ Position, nrow=rown, ncol=5)+
         geom_point(size=2, color=cols2[1])+theme_bw()+ggtitle(paste(monkey))+
         geom_vline(xintercept=tbweek, col="blue")+
-        ggsave(paste0("Output/Timeseries2/", monkey, ".all.pdf"), heigh=rown*2, width =10)
+        ggsave(paste0("Output/Timeseries_PID/", monkey, ".all.pdf"), heigh=rown*2, width =10)
 }
 
 #Find the over lapping positions
