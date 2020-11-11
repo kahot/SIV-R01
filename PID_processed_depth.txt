@@ -1,0 +1,211 @@
+#Trim first 100 bases of R2 file
+sed 's/^[A-Z]\{100\}//' R2.fasta > R2_trimmed.fasta
+
+#mean depth
+
+[1] "Run0_1_"
+[1] 16953.93
+[1] "Run0_10"
+[1] 11308.25
+[1] "Run0_11"
+[1] 3258.31
+[1] "Run0_14"
+[1] 565.6809
+[1] "Run0_16"
+[1] 6685.737
+[1] "Run0_17"
+[1] 3042.259
+[1] "Run0_3_"
+[1] 25866.97
+[1] "Run0_5_"
+[1] 10264.01
+[1] "Run0_6_"
+[1] 12217.8
+[1] "Run0_8_"
+[1] 11916.88
+[1] "Run2_1_"
+[1] 10221.11
+[1] "Run2_11"
+[1] 9575
+[1] "Run2_13"
+[1] 8092.062
+[1] "Run2_18"
+[1] 3962.698
+[1] "Run2_19"
+[1] 6296.407
+[1] "Run2_20"
+[1] 8685.458
+[1] "Run2_21"
+[1] 11916.39
+[1] "Run2_22"
+[1] 10076.31
+[1] "Run2_24"
+[1] 3561.681
+[1] "Run2_9_"
+[1] 5521.203
+[1] "Run3_1_"
+[1] 18067.76
+[1] "Run3_10"
+[1] 15401.04
+[1] "Run3_11"
+[1] 20761.15
+[1] "Run3_12"
+[1] 18573.85
+[1] "Run3_13"
+[1] 13323.26
+[1] "Run3_14"
+[1] 18538.37
+[1] "Run3_15"
+[1] 15541.22
+[1] "Run3_16"
+[1] 21566.32
+[1] "Run3_17"
+[1] 24952.49
+[1] "Run3_18"
+[1] 22054.73
+[1] "Run3_19"
+[1] 2613.621
+[1] "Run3_2_"
+[1] 18549.54
+[1] "Run3_20"
+[1] 20749.7
+[1] "Run3_21"
+[1] 25546.23
+[1] "Run3_22"
+[1] 25852.72
+[1] "Run3_23"
+[1] 4135.687
+[1] "Run3_3_"
+[1] 15914.83
+[1] "Run3_4_"
+[1] 19878.77
+[1] "Run3_5_"
+[1] 18340.32
+[1] "Run3_6_"
+[1] 14454.81
+[1] "Run3_7_"
+[1] 19371.79
+[1] "Run3_8_"
+[1] 6823.885
+[1] "Run3_9_"
+[1] 21571.8
+[1] "Run4_17"
+[1] 10590.96
+[1] "Run4_18"
+[1] 9737.598
+[1] "Run4_19"
+[1] 9630.101
+[1] "Run4_20"
+[1] 12662.25
+[1] "Run4_21"
+[1] 18759.68
+[1] "Run4_22"
+[1] 10668.37
+[1] "Run4_23"
+[1] 8790.715
+
+
+
+
+# Pileup summary of PID processed files
+
+[1] "Run0_1_"
+The maximum number of read depth is  31726
+[1] "Run0_10"
+The maximum number of read depth is  20968
+[1] "Run0_11"
+The maximum number of read depth is  5941
+[1] "Run0_14"
+The maximum number of read depth is  1053
+[1] "Run0_16"
+The maximum number of read depth is  12380
+[1] "Run0_17"
+The maximum number of read depth is  5583
+[1] "Run0_3_"
+The maximum number of read depth is  49312
+[1] "Run0_5_"
+The maximum number of read depth is  19247
+[1] "Run0_6_"
+The maximum number of read depth is  23738
+[1] "Run0_8_"
+The maximum number of read depth is  23231
+[1] "Run2_13"
+The maximum number of read depth is  10024
+[1] "Run2_18"
+The maximum number of read depth is  5098
+[1] "Run2_19"
+The maximum number of read depth is  7827
+[1] "Run2_20"
+The maximum number of read depth is  11188
+[1] "Run2_21"
+The maximum number of read depth is  14848
+[1] "Run2_22"
+The maximum number of read depth is  12439
+[1] "Run2_24"
+The maximum number of read depth is  4441
+[1] "Run2_9_"
+The maximum number of read depth is  7035
+[1] "Run2_1_"
+The maximum number of read depth is  12539
+[1] "Run2_11"
+The maximum number of read depth is  11902
+[1] "Run3_1_"
+The maximum number of read depth is  35005
+[1] "Run3_10"
+The maximum number of read depth is  29677
+[1] "Run3_11"
+The maximum number of read depth is  40335
+[1] "Run3_12"
+The maximum number of read depth is  36659
+[1] "Run3_13"
+The maximum number of read depth is  25915
+[1] "Run3_14"
+The maximum number of read depth is  36156
+[1] "Run3_15"
+The maximum number of read depth is  29764
+[1] "Run3_16"
+The maximum number of read depth is  41155
+[1] "Run3_17"
+The maximum number of read depth is  48421
+[1] "Run3_18"
+The maximum number of read depth is  42877
+[1] "Run3_19"
+The maximum number of read depth is  5075
+[1] "Run3_2_"
+The maximum number of read depth is  36874
+[1] "Run3_20"
+The maximum number of read depth is  40095
+[1] "Run3_21"
+The maximum number of read depth is  49564
+[1] "Run3_22"
+The maximum number of read depth is  50000
+[1] "Run3_23"
+The maximum number of read depth is  8054
+[1] "Run3_3_"
+The maximum number of read depth is  30787
+[1] "Run3_4_"
+The maximum number of read depth is  38604
+[1] "Run3_5_"
+The maximum number of read depth is  35399
+[1] "Run3_6_"
+The maximum number of read depth is  28016
+[1] "Run3_7_"
+The maximum number of read depth is  37611
+[1] "Run3_8_"
+The maximum number of read depth is  13234
+[1] "Run3_9_"
+The maximum number of read depth is  42459
+[1] "Run4_17"
+The maximum number of read depth is  20482
+[1] "Run4_18"
+The maximum number of read depth is  12029
+[1] "Run4_19"
+The maximum number of read depth is  18879
+[1] "Run4_20"
+The maximum number of read depth is  24749
+[1] "Run4_21"
+The maximum number of read depth is  37030
+[1] "Run4_22"
+The maximum number of read depth is  20804
+[1] "Run4_23"
+The maximum number of read depth is  17260
