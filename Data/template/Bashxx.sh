@@ -3,7 +3,7 @@
 
 mkdir Output/M10
 #0 adapter trimming
-bbduk.sh in1=~/programs/BaseSpace/10_S10_L001_R1_001.fastq in2=~/programs/Basespace/10_S10_L001_R2_001.fastq  out=Output/M10/M10_adp.trimmed.fastq ref=/Users/kahotisthammer/programs/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 stats=Output/M10/stats_0.txt
+bbduk.sh in1=dir1/dir2/XX/10_S10_L001_R1_001.fastq in2=dir1/dir2/XX/10_S10_L001_R2_001.fastq  out=Output/M10/M10_adp.trimmed.fastq ref=/Users/kahotisthammer/programs/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 stats=Output/M10/stats_0.txt
 
 #1 Trim reads at both ends at Score<30
 bbduk.sh in=Output/M10/M10_adp.trimmed.fastq out=Output/M10/M10_trimmed.q30.fastq qtrim=rl trimq=30 stats=Output/M10/stats30_1.txt
