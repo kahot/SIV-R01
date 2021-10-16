@@ -1,3 +1,5 @@
+## Non PID ##
+
 library(tidyverse)
 source("Rscripts/BaseRscript.R")
 
@@ -5,8 +7,9 @@ source("Rscripts/BaseRscript.R")
 
 ###########################
 
-#SIVFiles<-list.files("Output/CSV_PID/",pattern="csv")
-SIVFiles<-list.files("Output/CSV_PIDcon/",pattern="^Run7.*PID.csv")
+SIVFiles<-list.files("Output/CSV/",pattern="csv")
+
+#SIVFiles<-SIVFiles[s2]
 
 coding.start<-190
 coding.end<-681
@@ -15,9 +18,7 @@ for (i in 1:length(SIVFiles)){
         print(i)
         id<-substr(paste(SIVFiles[i]),start=1,stop=7)
         print(id)
-        #SeqData<-read.csv(paste0("Output/CSV_PID/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
-        SeqData<-read.csv(paste0("Output/CSV_PIDcon/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
-        
+        SeqData<-read.csv(paste0("Output/CSV/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
         SeqData<-SeqData[,-1]
         colnames(SeqData)[1]<-"pos"
         colnames(SeqData)[8:9]<-c("deletion","insertion") #deletion here is more like N
@@ -109,37 +110,8 @@ for (i in 1:length(SIVFiles)){
                       }
         }
                 
-        write.csv(SeqData,paste0("Output/SeqData_PIDcon/SeqData_",id,".con.csv"))
+        write.csv(SeqData,paste0("Output/SeqData/SeqData_",id,".csv"))
 
 }
 
 
-## Max and Average read depth ###
-
-csvs<-list.files("Output/CSV_PIDcon/")
-depth<-data.frame(files=csvs)
-for (i in 1:length(csvs)){
-    id<-substr(paste(csvs[i]),start=1,stop=7)
-    
-    df<-read.csv(paste0("Output/CSV_PIDcon/",csvs[i]), row.names = 1, stringsAsFactors = F)
-    ave<-mean(df$TotalReads, na.rm=T)
-    mx<-max(df$TotalReads, na.rm=T)
-    nb<-substr(id, start=6,stop=7)
-    nb<-gsub("_","",nb)
-    depth$File.name[i]<-id
-    depth$run[i]<-substr(id, start=4,stop=4)
-    depth$number[i]<-nb
-    depth$Average[i]<-round(ave, digits = 1)
-    depth$Max[i]<-mx
-}
-
-depth<-depth[,-1]
-samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
-samples<-samples[,c("File.name","Tissue")]
-depth2<-merge(depth, samples, by="File.name")
-
-depth2$Tissue2<-ifelse(depth2$Tissue=="Plasma"|depth2$Tissue=="Stock", "Plasma", "Tissue")
-aggregate(depth2["Average"], by=list(depth2$run,depth2$Tissue2), FUN=mean)
-
-
-write.csv(depth2, "Output/ReadDeapth_all.csv")

@@ -1,5 +1,5 @@
 library(tidyverse)
-source("Rscripts/BaseRscript.R")
+source("Rscripts/BaseRscript2.R")
 
 #dir.create("Output/SeqData/")
 
@@ -138,7 +138,7 @@ samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
 samples<-samples[,c("File.name","Tissue")]
 depth2<-merge(depth, samples, by="File.name")
 
-depth2$Tissue2<-ifelse(depth2$Tissue=="Plasma"|depth2$Tissue=="Stock", "Plasma", "Tissue")
+depth2$Tissue2<-ifelse(depth2$Tissue=="Plasma", "Plasma", "Tissue")
 aggregate(depth2["Average"], by=list(depth2$run,depth2$Tissue2), FUN=mean)
 
 
