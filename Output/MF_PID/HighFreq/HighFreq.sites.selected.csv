@@ -1,0 +1,12 @@
+﻿pos,ref,WTAA,Type.1,Type.2,aa1,aa2,cpg1,cpg2,bigAA1,bigAA2,occurence
+297,t,D,Tv1,Tv2,E,E,0,0,0,0,10
+305,g,R,Ts,Tv1,K,T,0,0,0,1,10
+326,t,V,Tv1,Ts,E,A,0,0,1,0,10
+340,g,A,Ts,Tv1,T,P,0,0,1,1,10
+373,a,N,Ts,Tv2,D,Y,0,0,1,1,10
+431,c,P,Tv1,Tv2,Q,R,1,0,1,1,10
+485,a,K,Ts,Tv2,R,M,0,0,0,1,9
+515,g,R,Tv1,Ts,T,K,1,0,1,0,7
+536,a,N,Ts,Tv1,S,T,0,0,0,0,8
+539,c,T,Tv1,Ts,N,I,0,0,0,1,9
+548,g,S,Ts,Tv2,N,I,1,0,0,1,7
