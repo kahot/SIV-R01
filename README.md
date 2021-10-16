@@ -3,8 +3,8 @@
 ## Analysis of SIV R01 SIV/Mtb Co-infection Study
 
 
-* Data directory contains sample information. SampleSheet_Mac251.csv has the most comprehensive sample information.
-* Output directory contains all output files, except the bam files (due to the memory limit)
+* Data directory contains sample meta data/information. SampleSheet_Mac251.csv has the most comprehensive sample information.
+* Output directory contains all output files, except the bam files (due to the memory limit of GitHub).
 * Rscripts directory contains all scripts for the analysis. 
 
 
@@ -41,25 +41,29 @@ done
 ### Step 4. Map merged sequences (from Step 3)to the reference genome using bwa with a relaxed setting 
 	• Use the 'Step 3' section of 1.CreateBash_PID.R to create all bash files
 	• Run all of them. Output is sorted bam files and bam index files, saved in Output/bam_PID/
-	
-### Step 5. A) Use the pileup to create A) frequency tables (2.pileup_Rsamtools_PID.R) or
-###         B) Create  genotype data using 8.1.Genotyping.R  Output is in Output/Genotype/
-	
 
-### Analysis 5A: calculate mutation frequencies and diversity from frequency tables
-    • Follow the R scripts #2-7 to assess diversity and divergence.  
 	
-	
-#4. Create bash files to map PID-consensus.fasta to the reference using bwa with a relaxed setting. The template is Bash_mapConPID.sh. Run all bash files    
-### 2. After mapping is done, start the analysis in R by following the file numbers
-
-    • Scripts 1 to 3 create frequency tables for each bam file.
-    • Script 4 analyze the stock and control files 
-    • Script 5 assess trasnmitted/founder variants 
-    • Script 6 assess SIV diversity across tissues/time/cohorts and compare with RNA copy nubmers and CD4/CD8 frequency
-    • Script 7 analyze the indels 
-    • Script 8 assess the known immune escape mutations 
-    • Script 9 assess an intereting mutation at AA112
-    • Script 10 analyze the effects of genetic drift between tissues
-    • Script 11 conducts glmm to udnerstand the effects of different factors on SIV diversity
+# From here, you can conduct either diversity/divergence (mutation frequency) analysis (Step 5) 
+#  or focus on interesting (high-frequency) sites and analyze 'genotype' data 
+  
+### Step 5. Use the pileup to create mutation frequency tables and conduct analyses. Use... 
+    • Scripts 2 to 4.1 create frequency tables from each bam file.
+    • Script 4.2 to assess indels 
+    • Script 4.3 to look at the stock and control files
+    • Script 5.1 to look at mutation frequency/diversity patterns of each sample and within each monkey
+    • Script 5.2 to find sites with a high mutation freqeuncy to select the sites of interest for further analyses     
+    • Script 5.3 compares the mutation frequenceis of samples with and without Primer ID
     
+    
+### Step 6.1 Create genotype tables using 6+ scripts.
+	• Script 6.0 to create an aligend fasta file of consensus PID sequences for each file
+	• Script 6.1 to create 'genotype' data bassed on nucleotides using the sites identified by Script 5.2 (currently 11 sites)
+	• Script 7.0 to create fasta files with translated amino acids for each sample 
+	• Script 7.1 to create 'genotype' data bassed on amino acids
+	• Script 7.2 to create genotype figures (stacked area charts, streamgraphs)
+	• Script 7.3 to assess how AA changed over time in each monkey  
+    • Script 7.4 to focus on the 3 mutations (D99E, K102R, P144Q) -create genotype freq based on the 3 sties
+    • Script 7.5 to further look into the 3 mutations  
+    
+
+###  Scripts starting with A are for samples without PID
