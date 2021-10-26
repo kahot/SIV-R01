@@ -67,7 +67,7 @@ for (j in 1:length(AAsites)){
         
         Pos<-data.frame(Week=sample$Week, Tissue=sample$Tissue)
         
-        for (l in 1: length(aaList)){
+        for (l in 1:length(aaList)){
             L<-lapply(aaFreq, function(x) x$Prop[x$Var1==aaList[l]])
             L[sapply(L, length)==0]<-0
             Pos[,aaList[l]]<-unlist(L)
@@ -81,15 +81,19 @@ for (j in 1:length(AAsites)){
         Freq<-rbind(Freq, Posm)
     }
     
-    ggplot(data=Freq, aes(x=Week, y=Freq, color=AA))+
+    Freq$AA<-as.character(Freq$AA)
+    #eliminate the really low freq. AAs
+    Freq2<-Freq[Freq$Freq>0.001,]
+    
+    ggplot(data=Freq2, aes(x=Week, y=Freq, color=AA))+
         ylab("Mutation frequency")+xlab("Week")+ylim(0,1)+
-        facet_wrap(~ Monkey, nrow=5, ncol=2)+
+        facet_wrap(~ Monkey, nrow=6, ncol=2)+
         geom_point(size=1.5)+theme_bw()+
-        #scale_color_manual(values=cols2[c(1,3,5,2)], label=c("A","C",'G',"T"))+
-        geom_path(data=Freq[Freq$Tissue=="Plasma",], aes(x=Week, y=Freq))+
+        #scale_color_manual(values=col8[c(2,3,4,1,5,7,6,8)])+
+        geom_path(data=Freq2[Freq2$Tissue=="Plasma",], aes(x=Week, y=Freq))+
         theme(legend.title = element_blank())+
         geom_vline(aes(xintercept=Tbweek), col="blue")+
         ggtitle(paste(position, aalabels[j]))+theme(plot.title = element_text(size=10), axis.title.y = element_text(size=8))
-    ggsave(paste0("Output/AA/Overtime/", position,"_overtime.png"), width = 8, height=8,dpi=300)
+    ggsave(paste0("Output/AA/Overtime/", position,"_overtime2.png"), width = 8, height=8,dpi=300)
 }
    

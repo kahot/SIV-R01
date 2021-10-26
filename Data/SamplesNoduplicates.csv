@@ -1,108 +1,108 @@
-﻿Run,File name,Monkey,SIV_infection,Week,#,Tissue,Tissue2,Granuloma,Coinfection
-0,Run0_1_,A22517,SIVw1,1,S1,Plasma,Plasma,NA,Y
-0,Run0_5_,A22217,SIVw1,1,S5,Plasma,Plasma,NA,Y
-0,Run0_10,A22217,SIVw4,4,S10,Plasma,Plasma,NA,Y
-3,Run3_12,A21918,SIVw17,17,S12,Plasma,Plasma,NA,Y
-3,Run3_13,A21918,SIVw19,19,S13,Plasma,Plasma,NA,Y
-3,Run3_14,A21918,SIVw22,22,S14,Plasma,Plasma,NA,Y
-3,Run3_15,A23918,SIVw17,17,S15,Plasma,Plasma,NA,Y
-3,Run3_16,A23918,SIVw19,19,S16,Plasma,Plasma,NA,Y
-3,Run3_17,A21818,SIVw1,1,S17,Plasma,Plasma,NA,Y
-3,Run3_18,A22218,SIVw1,1,S18,Plasma,Plasma,NA,Y
-3,Run3_19,A22318,SIVw1,1,S19,Plasma,Plasma,NA,Y
-0,Run0_6_,A22517,SIVw4,4,S6,Plasma,Plasma,NA,Y
-3,Run3_20,A23218,SIVw1,1,S20,Plasma,Plasma,NA,Y
-3,Run3_21,A23518,SIVw1,1,S21,Plasma,Plasma,NA,Y
-3,Run3_22,A24018,SIVw1,1,S22,Plasma,Plasma,NA,Y
-3,Run3_23,A24018,SIVw6,6,S23,Plasma,Plasma,NA,Y
-0,Run0_11,A22517,SIVw8,8,S11,Plasma,Plasma,NA,Y
-6,Run6_19,A22617,L cran HLN 1,33,,HLN,L cran HLN 1,N,Y
-4,Run4_17,A22317,SIVw1,1,S17,Plasma,Plasma,NA,Y
-2,Run2_1_,A22517,SIVw16,16,S1,Plasma,Plasma,NA,Y
-5,Run5_1_,A22517,wk 16 LN,16,,LN,LN,,Y
-3,Run3_1_,A22517,SIVw22,22,S1,Plasma,Plasma,NA,Y
-5,Run5_2_,A22617,wk 16 LN,16,,LN,LN,,Y
-6,Run6_20,A22617,R carin LN gran,33,,LN,R carin LN Gr,Y,Y
-5,Run5_7_,A22617,R Ing LN,33,,LN,R Ing LN,,Y
-2,Run2_9_,A22117,SIVw8,8,S9,Plasma,Plasma,NA,Y
-2,Run2_10,A22117,SIVw16,16,S10,Plasma,Plasma,NA,Y
-2,Run2_11,A22117,SIVw21,21,S11,Plasma,Plasma,NA,Y
-2,Run2_13,A22117,SIVw31(nex),31,S13,Plasma,Plasma,NA,Y
-4,Run4_18,A22317,SIVw4,4,S18,Plasma,Plasma,NA,Y
-4,Run4_19,A22317,SIVw8,8,S19,Plasma,Plasma,NA,Y
-0,Run0_14,A22217,SIVw8,8,S14,Plasma,Plasma,NA,Y
-0,Run0_16,A22217,SIVw15,15,S16,Plasma,Plasma,NA,Y
-2,Run2_20,A21918,SIVw1,1,S20,Plasma,Plasma,NA,Y
-2,Run2_21,A21918,SIVw3,3,S21,Plasma,Plasma,NA,Y
-2,Run2_22,A21918,SIVw8,8,S22,Plasma,Plasma,NA,Y
-3,Run3_2_,A22517,SIVw25,25,S2,Plasma,Plasma,NA,Y
-5,Run5_4_,A22217,wk 15 LN,15,,LN,LN,,Y
-0,Run0_17,B670_Stock,0,0,S17,Stock,Stock,NA,Y
-3,Run3_10,A22217,SIVw19,19,S10,Plasma,Plasma,NA,Y
-0,Run0_3_,A22117,SIVw1,1,S3,Plasma,Plasma,NA,Y
-3,Run3_3_,A22517,SIVw32 nex,32,S3,Plasma,Plasma,NA,Y
-0,Run0_8_,A22117,SIVw3,3,S8,Plasma,Plasma,NA,Y
-3,Run3_11,A22217,SIVw22,22,S11,Plasma,Plasma,NA,Y
-4,Run4_21,A22617,SIVw1,1,S21,Plasma,Plasma,NA,Y
-4,Run4_22,A22617,SIVw4,4,S22,Plasma,Plasma,NA,Y
-4,Run4_20,A22317,SIVw16,16,S20,Plasma,Plasma,NA,Y
-4,Run4_23,A22617,SIVw8,8,S23,Plasma,Plasma,NA,Y
-3,Run3_7_,A22317,SIVw21,21,S7,Plasma,Plasma,NA,Y
-3,Run3_8_,A22317,SIVw24,24,S8,Plasma,Plasma,NA,Y
-3,Run3_9_,A22317,SIVw28 nex,28,S9,Plasma,Plasma,NA,Y
-2,Run2_5_,A22617,SIVw16,16,S5,Plasma,Plasma,NA,Y
-3,Run3_4_,A22617,SIVw22,22,S4,Plasma,Plasma,NA,Y
-6,Run6_1_,A34119,R Ing LN,30,,LN,R Ing LN,N,N
-6,Run6_2_,A34119,L cran HLN 1,30,,HLN,L cran HLN 1,N,N
-6,Run6_3_,A34119,R carin LN,30,,LN,R carin LN,N,N
-6,Run6_4_,A34119,L subclav LN,30,,LN,L subclav LN,N,N
-6,Run6_5_,A22517,R Carinal LN Granuloma,32,,LN,R Carinal LN Gr,Y,Y
-6,Run6_6_,A22517,R Cran HLN gr,32,,HLN,R Cran HLN Gr,Y,Y
-6,Run6_7_,A22517,L subclav LN,32,,LN,L subclav LN,N,Y
-6,Run6_9_,A21918,L Sub Clav LN,22,,LN,L Sub Clav LN,N,Y
-6,Run6_10,A21918,R Sub Clav Ln Gran,22,,LN,R Sub Clav Ln Gr,Y,Y
-6,Run6_11,A21918,R Cran HLN Gr,22,,HLN,R Cran HLN Gr,Y,Y
-6,Run6_12,A22117,R subclav LN gran,31,,LN,R subclav LN Gr,Y,Y
-6,Run6_13,A22117,R Carin LN Gran,31,,LN,R Carin LN Gr,Y,Y
-2,Run2_19,A22217,SIVw24 nex,24,S19,Plasma,Plasma,NA,Y
-6,Run6_14,A22217,L cran hLN,24,,HLN,L cran hLN,N,Y
-6,Run6_16,A22317,L cran HLN 1,28,,HLN,L cran HLN 1,N,Y
-6,Run6_17,A22317,R paratrach LN gran,28,,LN,R paratrach LN Gr,Y,Y
-6,Run6_18,A22317,R subclav LN gran,28,,LN,R subclav LN Gr,Y,Y
-3,Run3_5_,A22617,SIVw25,25,S5,Plasma,Plasma,NA,Y
-6,Run6_21,A34019,R Ing LN,26,,LN,R Ing LN,N,Y
-6,Run6_22,A34019,L cran HLN 1,26,,HLN,L cran HLN 1,N,Y
-6,Run6_23,A34019,R carin LN gran,26,,LN,R carin LN Gr,Y,Y
-6,Run6_24,A34019,R subclav LN gran,26,,LN,R subclav LN Gr,Y,Y
-6,Run6_8_,A22517,L carin LN,32,,LN,L carin LN,N,Y
-3,Run3_6_,A22617,SIVw33 nex,33,S6,Plasma,Plasma,NA,Y
-5,Run5_3_,A22117,wk 16 LN,16,,LN,LN,,Y
-6,Run6_15,A22217,L subclav LN,24,,LN,L subclav LN,N,Y
-5,Run5_5_,A21918,wk 15 LN,15,,LN,LN,N,Y
-5,Run5_6_,A22517,L Ax LN,32,,LN,L Ax LN,,Y
-5,Run5_8_,A22117,R Ax LN,31,,LN,R Ax LN,,Y
-5,Run5_9_,A22317,R Ing LN,28,,LN,R Ing LN,,Y
-5,Run5_10,A22217,R Ing LN,24,,LN,R Ing LN,,Y
-5,Run5_12,A34119,8,8,,Plasma,Plasma,NA,N
-5,Run5_13,A34119,15,15,,Plasma,Plasma,NA,N
-5,Run5_14,A34119,30,30,,Plasma,Plasma,NA,N
-5,Run5_15,A34219,8,8,,Plasma,Plasma,NA,N
-5,Run5_16,A34219,15,15,,Plasma,Plasma,NA,N
-5,Run5_17,A34219,30,30,,Plasma,Plasma,NA,N
-5,Run5_18,Control,Control,Control,Control,Control,Control,NA,Y
-7,Run7_23,A23918,SIVw1,1,,Plasma,Plasma,NA,Y
-7,Run7_24,A23918,SIVw4,4,,Plasma,Plasma,NA,Y
-7,Run7_9_,A34219,34219-10,30,,LN,R. Ing LN,N,N
-7,Run7_10,A34219,34219-4,30,,HLN,L Cran HLN,N,N
-7,Run7_11,A34219,34219-16,30,,LN,R Carin LN,N,N
-7,Run7_12,A34219,34219-25,30,,Colon,Colon,N,N
-7,Run7_13,A22117,22117-37,31,,HLN,L Cran HLN 1,,Y
-7,Run7_14,A22117,22117-25,31,,LN,R Carin LN gr,,Y
-7,Run7_15,A22517,,32,,LN,R ax LN,N,Y
-7,Run7_16,A22517,,32,,LN,R ing LN,N,Y
-7,Run7_17,A21918,L Ax LN,22,,LN,L Ax LN,N,Y
-7,Run7_18,A22117,22117-37,31,,LN,L ax LN,N,Y
-7,Run7_19,A22117,22117-16,31,,Lung,LLL,N,Y
-7,Run7_20,A22217,,24,,Lung,RLL,N,Y
-7,Run7_21,A22117,22117-42,31,,LN,R ing LN,N,Y
-7,Run7_22,A22217,,24,,LN,L ax LN,N,Y
+﻿Run,File name,Monkey,SIV_infection,Week,#,Tissue,Tissue2,Granuloma,Coinfection,Tissue.type
+0,Run0_1_,A22517,SIVw1,1,S1,Plasma,Plasma,NA,Y,Plasma
+0,Run0_5_,A22217,SIVw1,1,S5,Plasma,Plasma,NA,Y,Plasma
+0,Run0_10,A22217,SIVw4,4,S10,Plasma,Plasma,NA,Y,Plasma
+3,Run3_12,A21918,SIVw17,17,S12,Plasma,Plasma,NA,Y,Plasma
+3,Run3_13,A21918,SIVw19,19,S13,Plasma,Plasma,NA,Y,Plasma
+3,Run3_14,A21918,SIVw22,22,S14,Plasma,Plasma,NA,Y,Plasma
+3,Run3_15,A23918,SIVw17,17,S15,Plasma,Plasma,NA,Y,Plasma
+3,Run3_16,A23918,SIVw19,19,S16,Plasma,Plasma,NA,Y,Plasma
+3,Run3_17,A21818,SIVw1,1,S17,Plasma,Plasma,NA,Y,Plasma
+3,Run3_18,A22218,SIVw1,1,S18,Plasma,Plasma,NA,Y,Plasma
+3,Run3_19,A22318,SIVw1,1,S19,Plasma,Plasma,NA,Y,Plasma
+0,Run0_6_,A22517,SIVw4,4,S6,Plasma,Plasma,NA,Y,Plasma
+3,Run3_20,A23218,SIVw1,1,S20,Plasma,Plasma,NA,Y,Plasma
+3,Run3_21,A23518,SIVw1,1,S21,Plasma,Plasma,NA,Y,Plasma
+3,Run3_22,A24018,SIVw1,1,S22,Plasma,Plasma,NA,Y,Plasma
+3,Run3_23,A24018,SIVw6,6,S23,Plasma,Plasma,NA,Y,Plasma
+0,Run0_11,A22517,SIVw8,8,S11,Plasma,Plasma,NA,Y,Plasma
+6,Run6_19,A22617,L cran HLN 1,33,,HLN,L cran HLN 1,N,Y,dLN
+4,Run4_17,A22317,SIVw1,1,S17,Plasma,Plasma,NA,Y,Plasma
+2,Run2_1_,A22517,SIVw16,16,S1,Plasma,Plasma,NA,Y,Plasma
+5,Run5_1_,A22517,wk 16 LN,16,,LN,LN,,Y,LN
+3,Run3_1_,A22517,SIVw22,22,S1,Plasma,Plasma,NA,Y,Plasma
+5,Run5_2_,A22617,wk 16 LN,16,,LN,LN,,Y,LN
+6,Run6_20,A22617,R carin LN gran,33,,LN,R carin LN Gr,Y,Y,dLN
+5,Run5_7_,A22617,R Ing LN,33,,LN,R Ing LN,,Y,pLN
+2,Run2_9_,A22117,SIVw8,8,S9,Plasma,Plasma,NA,Y,Plasma
+2,Run2_10,A22117,SIVw16,16,S10,Plasma,Plasma,NA,Y,Plasma
+2,Run2_11,A22117,SIVw21,21,S11,Plasma,Plasma,NA,Y,Plasma
+2,Run2_13,A22117,SIVw31(nex),31,S13,Plasma,Plasma,NA,Y,Plasma
+4,Run4_18,A22317,SIVw4,4,S18,Plasma,Plasma,NA,Y,Plasma
+4,Run4_19,A22317,SIVw8,8,S19,Plasma,Plasma,NA,Y,Plasma
+0,Run0_14,A22217,SIVw8,8,S14,Plasma,Plasma,NA,Y,Plasma
+0,Run0_16,A22217,SIVw15,15,S16,Plasma,Plasma,NA,Y,Plasma
+2,Run2_20,A21918,SIVw1,1,S20,Plasma,Plasma,NA,Y,Plasma
+2,Run2_21,A21918,SIVw3,3,S21,Plasma,Plasma,NA,Y,Plasma
+2,Run2_22,A21918,SIVw8,8,S22,Plasma,Plasma,NA,Y,Plasma
+3,Run3_2_,A22517,SIVw25,25,S2,Plasma,Plasma,NA,Y,Plasma
+5,Run5_4_,A22217,wk 15 LN,15,,LN,LN,,Y,LN
+0,Run0_17,B670_Stock,0,0,S17,Stock,Stock,NA,Y,Stock
+3,Run3_10,A22217,SIVw19,19,S10,Plasma,Plasma,NA,Y,Plasma
+0,Run0_3_,A22117,SIVw1,1,S3,Plasma,Plasma,NA,Y,Plasma
+3,Run3_3_,A22517,SIVw32 nex,32,S3,Plasma,Plasma,NA,Y,Plasma
+0,Run0_8_,A22117,SIVw3,3,S8,Plasma,Plasma,NA,Y,Plasma
+3,Run3_11,A22217,SIVw22,22,S11,Plasma,Plasma,NA,Y,Plasma
+4,Run4_21,A22617,SIVw1,1,S21,Plasma,Plasma,NA,Y,Plasma
+4,Run4_22,A22617,SIVw4,4,S22,Plasma,Plasma,NA,Y,Plasma
+4,Run4_20,A22317,SIVw16,16,S20,Plasma,Plasma,NA,Y,Plasma
+4,Run4_23,A22617,SIVw8,8,S23,Plasma,Plasma,NA,Y,Plasma
+3,Run3_7_,A22317,SIVw21,21,S7,Plasma,Plasma,NA,Y,Plasma
+3,Run3_8_,A22317,SIVw24,24,S8,Plasma,Plasma,NA,Y,Plasma
+3,Run3_9_,A22317,SIVw28 nex,28,S9,Plasma,Plasma,NA,Y,Plasma
+2,Run2_5_,A22617,SIVw16,16,S5,Plasma,Plasma,NA,Y,Plasma
+3,Run3_4_,A22617,SIVw22,22,S4,Plasma,Plasma,NA,Y,Plasma
+6,Run6_1_,A34119,R Ing LN,30,,LN,R Ing LN,N,N,pLN
+6,Run6_2_,A34119,L cran HLN 1,30,,HLN,L cran HLN 1,N,N,dLN
+6,Run6_3_,A34119,R carin LN,30,,LN,R carin LN,N,N,dLN
+6,Run6_4_,A34119,L subclav LN,30,,LN,L subclav LN,N,N,subclav
+6,Run6_5_,A22517,R Carinal LN Granuloma,32,,LN,R Carinal LN Gr,Y,Y,dLN
+6,Run6_6_,A22517,R Cran HLN gr,32,,HLN,R Cran HLN Gr,Y,Y,dLN
+6,Run6_7_,A22517,L subclav LN,32,,LN,L subclav LN,N,Y,subclav
+6,Run6_9_,A21918,L Sub Clav LN,22,,LN,L Sub Clav LN,N,Y,subclav
+6,Run6_10,A21918,R Sub Clav Ln Gran,22,,LN,R Sub Clav Ln Gr,Y,Y,subclav
+6,Run6_11,A21918,R Cran HLN Gr,22,,HLN,R Cran HLN Gr,Y,Y,dLN
+6,Run6_12,A22117,R subclav LN gran,31,,LN,R subclav LN Gr,Y,Y,subclav
+6,Run6_13,A22117,R Carin LN Gran,31,,LN,R Carin LN Gr,Y,Y,dLN
+2,Run2_19,A22217,SIVw24 nex,24,S19,Plasma,Plasma,NA,Y,Plasma
+6,Run6_14,A22217,L cran hLN,24,,HLN,L cran hLN,N,Y,dLN
+6,Run6_16,A22317,L cran HLN 1,28,,HLN,L cran HLN 1,N,Y,dLN
+6,Run6_17,A22317,R paratrach LN gran,28,,LN,R paratrach LN Gr,Y,Y,paratrach
+6,Run6_18,A22317,R subclav LN gran,28,,LN,R subclav LN Gr,Y,Y,subclav
+3,Run3_5_,A22617,SIVw25,25,S5,Plasma,Plasma,NA,Y,Plasma
+6,Run6_21,A34019,R Ing LN,26,,LN,R Ing LN,N,Y,pLN
+6,Run6_22,A34019,L cran HLN 1,26,,HLN,L cran HLN 1,N,Y,dLN
+6,Run6_23,A34019,R carin LN gran,26,,LN,R car Gr,Y,Y,dLN
+6,Run6_24,A34019,R subclav LN gran,26,,LN,R subclav LN Gr,Y,Y,subclav
+6,Run6_8_,A22517,L carin LN,32,,LN,L carin LN,N,Y,dLN
+3,Run3_6_,A22617,SIVw33 nex,33,S6,Plasma,Plasma,NA,Y,Plasma
+5,Run5_3_,A22117,wk 16 LN,16,,LN,LN,,Y,LN
+6,Run6_15,A22217,L subclav LN,24,,LN,L subclav LN,N,Y,subclav
+5,Run5_5_,A21918,wk 15 LN,15,,LN,LN,N,Y,LN
+5,Run5_6_,A22517,L Ax LN,32,,LN,L Ax LN,,Y,pLN
+5,Run5_8_,A22117,R Ax LN,31,,LN,R Ax LN,,Y,pLN
+5,Run5_9_,A22317,R Ing LN,28,,LN,R Ing LN,,Y,pLN
+5,Run5_10,A22217,R Ing LN,24,,LN,R Ing LN,,Y,pLN
+5,Run5_12,A34119,8,8,,Plasma,Plasma,NA,N,Plasma
+5,Run5_13,A34119,15,15,,Plasma,Plasma,NA,N,Plasma
+5,Run5_14,A34119,30,30,,Plasma,Plasma,NA,N,Plasma
+5,Run5_15,A34219,8,8,,Plasma,Plasma,NA,N,Plasma
+5,Run5_16,A34219,15,15,,Plasma,Plasma,NA,N,Plasma
+5,Run5_17,A34219,30,30,,Plasma,Plasma,NA,N,Plasma
+5,Run5_18,Control,Control,Control,Control,Control,Control,NA,Y,Control
+7,Run7_23,A23918,SIVw1,1,,Plasma,Plasma,NA,Y,Plasma
+7,Run7_24,A23918,SIVw4,4,,Plasma,Plasma,NA,Y,Plasma
+7,Run7_9_,A34219,34219-10,30,,LN,R. Ing LN,N,N,pLN
+7,Run7_10,A34219,34219-4,30,,HLN,L Cran HLN,N,N,dLN
+7,Run7_11,A34219,34219-16,30,,LN,R Carin LN,N,N,dLN
+7,Run7_12,A34219,34219-25,30,,Colon,Colon,N,N,Colon
+7,Run7_13,A22117,22117-37,31,,HLN,L Cran HLN 1,,Y,dLN
+7,Run7_14,A22117,22117-25,31,,LN,R Carin LN gr,,Y,dLN
+7,Run7_15,A22517,,32,,LN,R ax LN,N,Y,pLN
+7,Run7_16,A22517,,32,,LN,R ing LN,N,Y,pLN
+7,Run7_17,A21918,L Ax LN,22,,LN,L Ax LN,N,Y,pLN
+7,Run7_18,A22117,22117-37,31,,LN,L ax LN,N,Y,pLN
+7,Run7_19,A22117,22117-16,31,,Lung,LLL,N,Y,Lung
+7,Run7_20,A22217,,24,,Lung,RLL,N,Y,Lung
+7,Run7_21,A22117,22117-42,31,,LN,R ing LN,N,Y,pLN
+7,Run7_22,A22217,,24,,LN,L ax LN,N,Y,pLN

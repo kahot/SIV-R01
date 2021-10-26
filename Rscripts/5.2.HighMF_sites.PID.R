@@ -5,15 +5,6 @@ library(DataCombine)
 source("Rscripts/baseRscript.R")
 cols2<-qualitative_hcl(6, palette="Dark3")
 
-# read the files saved in Overview_output:
-#SIVFiles_overview<-list.files("Output/OverviewF_PID/",pattern="filtered.overview.csv")
-#Overview<-list()
-#for (i in 1:length(SIVFiles_overview)){ 
-#        overviews<-read.csv(paste0("Output/OverviewF_PID/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
-#        Overview[[i]]<-overviews
-#        names(Overview)[i]<-substr(paste(SIVFiles_overview[i]),start=1,stop=7)
-#}
-
 SIVFiles_overview<-list.files("Output/OverviewF_PIDcon/",pattern=".csv")
 
 SIVfiles<-list.files("Output/Overview_PIDcon/", pattern="Run5|Run6|Run7")
@@ -106,9 +97,8 @@ for (i in 1:length(monkeys2)){
     #Tranv1
     Tv1<-unname(sapply(mfDF1, `[[`, "freq.transv1.ref"))
     if (nrow(mfDF1[[1]])==1) Tv1<-data.frame(Tv1)
-    else { 
-    Tv1<-data.frame(t(Tv1)) 
-    }
+    if (nrow(mfDF1[[1]])>1) Tv1<-data.frame(t(Tv1)) 
+    
     nt2<-mfDF1[[1]][,"ref"]
     colnames(Tv1)<-paste0("Pos_",sites1, ' ',nt2, ' Tv1')
     Tv1<-InsertRow(Tv1, c(stock$freq.transv1.ref[stock$pos %in% sites1]), RowNum=1)
@@ -116,9 +106,7 @@ for (i in 1:length(monkeys2)){
     #Tranv2
     Tv2<-unname(sapply(mfDF2, `[[`, "freq.transv2.ref"))
     if (nrow(mfDF2[[1]])==1) Tv2<-data.frame(Tv2)
-    else { 
-        Tv2<-data.frame(t(Tv2))
-        }
+    if (nrow(mfDF2[[1]])>1) Tv2<-data.frame(t(Tv2))
     
     nt3<-mfDF2[[1]][,"ref"]
     colnames(Tv2)<-paste0("Pos_",sites2, ' ',nt3, ' Tv2')
@@ -173,7 +161,7 @@ cpos$occurence<-apply(cpos[,2:11], 1, function(x) length(x[x=="Y"]))
 #Remove the codon position 3 and all synonymous
 cpos2<-cpos[!(cpos$Type.r=="syn"&cpos$Type.tv1.r=="syn"&cpos$Type.tv2.r=="syn"),]
 #68 positions
-write.csv(cpos2, "Output/HighMutfreq_sites_all.csv")
+write.csv(cpos2, "Output/MF_PID/HighFreq/HighMutfreq_sites_all.csv")
 
 
 

@@ -159,6 +159,7 @@ for (m in 1:length(monkeyLis)){
         geom_bar(stat="identity", position = position_dodge(width = .8),alpha=0.8)+
         theme(axis.text.x = element_text(angle=90, hjust=1))+
         ggtitle(monkey)+xlab('')+
+        scale_fill_manual(values = cols[c(1,7)])+
         ylab("% mut w/o P144Q/nonP144Q")+ylim(0,ymax)
     
    

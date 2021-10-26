@@ -208,7 +208,7 @@ Summary$File.name<-factor(Summary$File.name, levels=paste(Summary$File.name))
 ggplot(Summary, aes(x=File.name, y=Diversity))+
     geom_point()
 ggplot(Summary, aes(x=File.name, y=Average))+
-    geom_point()
+    geom_point()+ylab('Read depth')+xlab('')
 
 #No correlation between read depths and diversity
 
@@ -216,14 +216,18 @@ Summary<-merge(Summary, samples[,c("File.name","Monkey","Week","Coinfection")],b
 colnames(Summary)[4:5]<-c("Ave.reads","Max.read")
 write.csv(Summary,"Output/Summary.Diversity_all.csv")
 
-#Compare the tissue and plasma diversity at necropsy
 
-animals<-unique(Summary$Monkey)
+
+
+
+#### Compare the tissue and plasma diversity (%) at necropsy
+
+monkeys
 Nec<-data.frame()
 Mid<-data.frame()
-Div<-data.frame(Animal=animals)
-for (i in 1:length(animals)){
-    sum<-Summary[Summary$Monkey==animals[i],]
+Div<-data.frame(Animal=monkeys)
+for (i in 1:length(monkeys)){
+    sum<-Summary[Summary$Monkey==monkeys[i],]
     
     #Midpoint tissue vs. plasma
     weeks<-sum$Week[sum$Tissue2=="Tissue"]
@@ -273,7 +277,7 @@ ggplot(Div2m, aes(x=Animal, y=Diversity_difference, fill=Timepoint, color=Coinfe
     geom_bar(stat="identity", position=position_dodge(width = 0.8))+
     ylab("Divrsity difference (Plasma-Tissues)")+xlab("")+
     theme_bw()+
-    scale_fill_manual(values=cols[c(1,6)])+
+    scale_fill_manual(values=cols[c(6,5)])+
     scale_color_manual(values=c("red","white"), 
             guide=guide_legend(override.aes=list(linetype=c(1,1),shape=c(NA,NA),color=c("red","white"), fill="gray90"))) +
     theme(panel.grid.major.x = element_blank())+

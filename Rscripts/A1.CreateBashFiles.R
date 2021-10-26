@@ -30,6 +30,11 @@ sink(NULL)
 
 ## Step 1
 
+dir<-"/Volumes/Kaho_Data/SIV_DATA/B670_Run_6-268458190/"
+dir2<-"FASTQ_Generation_2021-06-04_22_44_27Z-424462038/"
+
+
+
 # List all files to be processed
 fq<-list.files(paste0(dir,dir2), pattern="fastq.gz$",recursive = T) 
 

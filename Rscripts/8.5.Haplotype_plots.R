@@ -39,7 +39,6 @@ monkeyList<-monkeyList[tbs$ids]
 Monkeys<-names(monkeyList)
 
 for (i in 1:length(Monkeys)){
-for (i in 1:5){
     monkeyID<-Monkeys[i]
     sample<-monkeyList[[monkeyID]]
     sample<-sample[order(sample$Week),]
