@@ -3,14 +3,14 @@ library(dplyr)
 source("Rscripts/BaseRscript.R")
 
 #get the file name
-SIVFiles_SeqData<-list.files("Output/SeqData_PIDcon/",pattern="con.csv")
-#SIVFiles_SeqData<-list.files("Output/SeqData_PIDcon/",pattern="Run7")
+SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="con.csv")
+SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="Run4")
 
-Overview<-list()
+#Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   
         id<-substr(paste(SIVFiles_SeqData[i]),start=9,stop=15)
         print(id)
-        OverviewDF<-read.csv(paste0("Output/SeqData_PIDcon/",SIVFiles_SeqData[i]),row.names = 1, stringsAsFactors=FALSE)
+        OverviewDF<-read.csv(paste0("Output/SeqData_PID/",SIVFiles_SeqData[i]),row.names = 1, stringsAsFactors=FALSE)
                 
         TypeOfSite<-c() 
         TypeOfSite.tv1<-c()
@@ -65,9 +65,7 @@ for (i in 1:length(SIVFiles_SeqData)){
                 mutant1codon2.tv2 <- c(transv2(Refcodon[1]), Refcodon[2:3])  
                 mutant2codon2.tv2 <- c(Refcodon[1],transv2(Refcodon[2]), Refcodon[3])
                 mutant3codon2.tv2 <- c(Refcodon[1:2], transv2(Refcodon[3]))
-                
-
-                
+ 
                 TypeOfSite<-c(TypeOfSite,typeofsitefunction(WTcodon,mutant1codon))
                 TypeOfSite<-c(TypeOfSite,typeofsitefunction(WTcodon,mutant2codon))
                 TypeOfSite<-c(TypeOfSite,typeofsitefunction(WTcodon,mutant3codon))
@@ -102,21 +100,8 @@ for (i in 1:length(SIVFiles_SeqData)){
         OverviewDF$Type.tv1.r<-TypeOfSite2.tv1[1:length(OverviewDF$pos)]
         OverviewDF$Type.tv2.r<-TypeOfSite2.tv2[1:length(OverviewDF$pos)]
         
-        Overview[[i]]<-OverviewDF[,-c(1:7)]
-        
-        names(Overview)[i]<-id   
-}
-
-
-
-###############################
-
-Overview_sum<-list()
-
-for (i in 1:length(Overview)){
-
-        OverviewDF<-Overview[[i]]
-        id<-substr(paste(SIVFiles_SeqData[i]),start=9,stop=15)
+        #Remove the count info
+        OverviewDF<-OverviewDF[,-c(1:7)]
         
         OverviewDF$WTAA<-""
         OverviewDF$MUTAA<-""
@@ -194,12 +179,12 @@ for (i in 1:length(Overview)){
         } 
         
       
-        write.csv(OverviewDF,paste0("Output/Overview_PIDcon/",id,"_overview.csv"))
+        write.csv(OverviewDF,paste0("Output/Overview_PID/",id,"_overview.csv"))
         
-        #filter the sites with reads<10000
-        remove<-which(OverviewDF$TotalReads<1000)
+        #filter the sites with reads<100
+        remove<-which(OverviewDF$TotalReads<100)
         OverviewDF[remove, 7:16]<-NA
-        write.csv(OverviewDF,paste0("Output/OverviewF_PIDcon/",id,"_filtered.overview.con.csv"))
+        write.csv(OverviewDF,paste0("Output/OverviewF_PID/",id,"_filtered.overview.csv"))
 }
 
 

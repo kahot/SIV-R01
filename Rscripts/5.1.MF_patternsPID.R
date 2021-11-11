@@ -6,26 +6,27 @@ library(DataCombine)
 cols<-qualitative_hcl(6, palette="Dark3")
 
 # read all Overview files:
-#Use 'Filtered' overviews for Run1-Run4 (except for Run0_14 (500 reads) and some Run5 files with high read depths) 
-SIVFiles_overview<-list.files("Output/OverviewF_PIDcon/",pattern=".csv")
+#Use 'Filtered' overviews for those with over 100 average read 
+depth<-read.csv("Output/ReadDeapth_all.csv", row.names = 1)
+over100<-depth$File.name[depth$Average>100]
 
-SIVfiles<-list.files("Output/Overview_PIDcon/", pattern="Run5|Run6|Run7")
-SIVfiles<-SIVfiles[SIVfiles!="Run5_12_overview.csv"]
-SIVfiles<-SIVfiles[SIVfiles!="Run5_13_overview.csv"]
-SIVfiles<-SIVfiles[SIVfiles!="Run5_15_overview.csv"]
-SIVfiles<-c(SIVfiles,"Run0_14_overview.csv")
+#(except for Run0_14 (500 reads) and some Run5 files with high read depths) 
+filtered<-list.files("Output/OverviewF_PID/",pattern=".csv")
+
+nonFiltered<-list.files("Output/Overview_PID/", pattern=".csv")
+
 Overview<-list()
-for (i in 1:length(SIVFiles_overview)){ 
-        overviews<-read.csv(paste0("Output/OverviewF_PIDcon/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
-        Overview[[i]]<-overviews
-        names(Overview)[i]<-substr(paste(SIVFiles_overview[i]),start=1,stop=7)
-}
-n<-length(SIVFiles_overview)
-
-for (i in (n+1):(length(SIVfiles)+n)){
-    df<-read.csv(paste0("Output/Overview_PIDcon/", SIVfiles[i-n]),stringsAsFactors=F, row.names = 1)
-    Overview[[i]]<-df
-    names(Overview)[i]<-substr(paste(SIVfiles[i-n]),start=1,stop=7)
+for (i in 1:length(filtered)){ 
+        id<-substr(paste(filtered[i]),start=1,stop=7)
+    
+        if (id %in% over100) df<-read.csv(paste0("Output/OverviewF_PID/",filtered[i]),stringsAsFactors=F, row.names = 1)
+        else {
+            df<-read.csv(paste0("Output/Overview_PID/",nonFiltered[i]),stringsAsFactors=F, row.names = 1) 
+            df[which(df$TotalReads<10), 7:16]<-NA #filter at 10
+            }
+        
+        Overview[[i]]<-df
+        names(Overview)[i]<-id
 }
 
 
@@ -332,7 +333,67 @@ do.call(grid.arrange, c(plots, ncol=2))
 dev.off()
 
 
+### Overtime in one plot (Plasma only)
 
+monkeys2<-monkeyList[tbs$ids]
+#remove the monkey with Tissue only
+monkeys<-names(monkeys2)
+monkeys<-monkeys[monkeys!="A34019"]
+monkeys3<-monkeys2[monkeys]
+
+Div<-data.frame()
+for (i in 1:length(monkeys)){
+    sample<-monkeys2[[monkeys[i]]]
+    sample<-sample[sample$Tissue=="Plasma",]
+    sample<-sample[order(sample$Week),]
+    ovDF<-Overview[as.vector(sample$File.name)]
+    monkey<-monkeys[i]
+    tbweek<-tbs$tb[tbs$ids==monkey]
+    diversity<-sample[,c(3,5)]
+    for (j in 1:length(ovDF)){
+        df<-ovDF[[j]]
+        diversity$Diversity[j]<-mean(df$freq.mutations, na.rm=T)*100
+        diversity$MF[j]<-mean(df$freq.mutations.ref, na.rm=T)*100
+    }
+    
+    diversity<-InsertRow(diversity,c(monkey,0,mean(stock$freq.mutations.ref, na.rm=T)*100,mean(stock$freq.mutations.ref, na.rm=T)*100 ),1)
+    diversity$Monkey<-gsub("A",'',monkey)
+    
+    diversity$Week<-as.integer(diversity$Week)
+    diversity$Diversity<-as.numeric(diversity$Diversity)
+    diversity$MF<-as.numeric(diversity$MF)
+    
+    Div<-rbind(Div, diversity)
+    
+    
+}
+
+tbs2<-tbs[tbs$ids!="A34019",]
+
+ggplot(data=Div, aes(x=Week, y=Diversity, color=Monkey))+
+    ylab("% Diversity")+xlab("")+
+    geom_point(size=2)+theme_bw()+
+    geom_line()+
+    #ylim(0.4,2.2)+
+    #theme(plot.title = element_text(size=11))+
+    #scale_color_manual(values=cols[c(1,6,4,2,3)])+
+    theme(panel.grid.major.x  = element_blank(),panel.grid.minor.x = element_blank())+
+geom_vline(data=tbs2, aes(xintercept=tbs2$tb,color=tbs2$ids),linetype = "dashed", size=0.5)
+    #scale_x_continuous(breaks=seq(0,32,2), limits = c(0,32))+
+    
+ggsave("Output/MF_PID/Diversity_overtime_all.pdf", width = 10, height = 6)
+
+
+plots[[i]]<-ggplot()+
+    ylab("Diversity")+xlab("")+
+    geom_point(data=diversity, aes(x=Week, y=Diversity, color=Tissue), size=2)+theme_bw()+
+    ggtitle(paste0(monkey))+ylim(0.4,2.2)+
+    theme(plot.title = element_text(size=11))+
+    scale_color_manual(values=cols[c(1,6,4,2,3)])+
+    theme(panel.grid.major.x  = element_blank(),panel.grid.minor.x = element_blank())+
+    geom_vline(xintercept=tbweek, col="deeppink")+
+    scale_x_continuous(breaks=seq(0,32,2), limits = c(0,32))+
+    geom_line(data=diversity[diversity$Tissue=="Plasma"|diversity$Tissue=="Stock",],aes(x=Week, y=Diversity), color=cols[6])
 
 
 

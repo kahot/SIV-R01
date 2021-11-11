@@ -7,7 +7,7 @@ source("Rscripts/baseRscript.R")
 cols2<-qualitative_hcl(6, palette="Dark3")
 
 #get the file name
-SIVFiles_SeqDataP<-list.files("Output/SeqData_PIDcon/",pattern="SeqData")
+SIVFiles_SeqDataP<-list.files("Output/SeqData_PID/",pattern="SeqData")
 
 
 #where do the indels occur?
@@ -18,7 +18,7 @@ Indels<-list()
 for (i in 1:length(SIVFiles_SeqDataP)){   
         id<-substr(paste(SIVFiles_SeqDataP[i]),start=9,stop=15)
         print(id)
-        DF<-read.csv(paste0("Output/SeqData_PIDcon/",SIVFiles_SeqDataP[i]),row.names = 1, stringsAsFactors=FALSE)
+        DF<-read.csv(paste0("Output/SeqData_PID/",SIVFiles_SeqDataP[i]),row.names = 1, stringsAsFactors=FALSE)
         #DF<-DF[!is.na(DF$a),]
         DF$del.percent<-DF$deletion/DF$TotalReads
         DF$ins.percent<-DF$insertion/DF$TotalReads

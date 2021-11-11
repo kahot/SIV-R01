@@ -10,6 +10,35 @@ dir<-"~/programs/BaseSpace/B670_Run_7_Repeat_2-292249961/"
 dir2<-"FASTQ_Generation_2021-09-07_14_35_26Z-457696525/"
 
 
+#Other runs
+run="Run6_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/B670_Run_6-268458190/"
+dir2<-"FASTQ_Generation_2021-06-04_22_44_27Z-424462038/"
+
+run="Run5_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/B670_run_5_and_Mouse_LAI_RT-215809595/"
+dir2<-"FASTQ_Generation_2020-12-12_02_55_33Z-352361009/"
+
+run="Run4_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/Youya_Comp_Assay_and_B670_repeats-197798601/"
+dir2<-"FASTQ_Generation_2020-09-21_12_33_39Z-317066848/"
+
+run="Run3_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/B670_Run_3-142079938/"
+dir2<-"FASTQ_Generation_2019-10-03_13_19_45Z-193695834/"
+
+run="Run2_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/B670_Run_2-123312015/"
+dir2<-"FASTQ_Generation_2019-03-29_02_49_40Z-171066940/"
+
+run="Run0_"
+dir<-"/Volumes/Kaho_Data/SIV_DATA/Ambrose_B670-2-77614630/FASTQ_Generation_2018-05-28_02_16_15Z-98128734/"
+dir2<-"FASTQ_Generation_2018-05-28_02_16_15Z-98128734/"
+
+
+
+
+
 ## Step 1: Rename the folders for fastq files (simplify)
 
 folders<-list.files(paste0(dir,dir2))
@@ -49,16 +78,25 @@ for (i in 1:length(fq2)){
 runfiles<-flist$File.name
 
 #read the appropriate template
-temp<-readLines("Data/template/Run_PIDpipeline.sh")
+temp<-readLines("Data/template/Run_TrimPID.sh")
 for (i in 1:length(runfiles)){
+    #choose the paired reads fastq files
     fname<-runfiles[i]
     numb<-gsub(run,'',fname)
-    new<-gsub(pattern="Run6_1_", replace=paste0(fname),x=temp)
+    
+    fa1<-fq2[i]
+    fa1<-sub(".*/", "", fa1)
+    fa2<-gsub(pattern="R1",replace="R2",x=fa1)
+    
+    new<-gsub(pattern="dir1/dir2/", replace=paste0(dir,dir2),x=temp)
     new<-gsub(pattern="XX", numb, x=new)
-    new<-gsub(pattern="/Users/kahotisthammer/programs/BaseSpace/B670_Run_6-268458190/FASTQ_Generation_2021-06-04_22_44_27Z-424462038/", paste0(dir,dir2), x=new)
-    writeLines(new, con=paste0("~/programs/PID-master/Bashscripts/",fname,".sh"))
+    new<-gsub(pattern="10_S10_L001_R1_001.fastq", replace=paste0(fa1),x=new)
+    new<-gsub(pattern="10_S10_L001_R2_001.fastq", replace=paste0(fa2),x=new)
+    new<-gsub(pattern="Run6_1_",replace=paste0(fname),x=new)
+    
+    writeLines(new, con=paste0("~/programs/PID-master/Bashscripts/",fname,".2.sh"))
+    
 }
-
 
 ## Step 2.2: Run the bash scripts in PID-master directory
 #-------
@@ -71,7 +109,7 @@ for (i in 1:length(runfiles)){
 ## Step 3: Run Merge.ForRevPID.R first. This step is for post merging 
 # Map PID-consensus fasta to reference using bwa (w/ relaxed setting)
 
-#files<-list.files("Output/PID_Consensus/", pattern = "Run7_")
+files<-list.files("Output/PID_Consensus/", pattern = "Run4_")
 files<-list.files("Output/PID_Consensus/", pattern = ".fasta")
 
 temp<-readLines("Data/template/Bash_mapConPID.sh")

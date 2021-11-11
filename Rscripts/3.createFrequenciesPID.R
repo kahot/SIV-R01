@@ -6,7 +6,7 @@ source("Rscripts/BaseRscript.R")
 ###########################
 
 #SIVFiles<-list.files("Output/CSV_PID/",pattern="csv")
-SIVFiles<-list.files("Output/CSV_PIDcon/",pattern="^Run7.*PID.csv")
+SIVFiles<-list.files("Output/CSV_PID/",pattern="^Run4.*PID.csv")
 
 coding.start<-190
 coding.end<-681
@@ -15,8 +15,7 @@ for (i in 1:length(SIVFiles)){
         print(i)
         id<-substr(paste(SIVFiles[i]),start=1,stop=7)
         print(id)
-        #SeqData<-read.csv(paste0("Output/CSV_PID/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
-        SeqData<-read.csv(paste0("Output/CSV_PIDcon/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
+        SeqData<-read.csv(paste0("Output/CSV_PID/",SIVFiles[i]), row.names = 1, stringsAsFactors = F)
         
         SeqData<-SeqData[,-1]
         colnames(SeqData)[1]<-"pos"
@@ -67,19 +66,7 @@ for (i in 1:length(SIVFiles)){
                       SeqData$freq.Ts[k]<-MutNum1/SeqData$TotalReads[k]
                       SeqData$freq.Ts.ref[k]<-MutNum2/SeqData$TotalReads[k]
                       
-                      
-                      #mutation frequencies of all transversion mutataions
-                      #if (SeqData$MajNt[k]=="a"|SeqData$MajNt[k]=='g'){
-                      #          TrvMutNum<-SeqData[k,"c"]+SeqData[k,"t"]}
-                      #if (SeqData$MajNt[k]=="c"|SeqData$MajNt[k]=="t"){
-                      #          TrvMutNum<-SeqData[k,"a"]+SeqData[k,"g"]}
-                      #SeqData$freq.transv[k]<-TrvMutNum/SeqData$TotalReads[k]
-                      #if (SeqData$ref[k]=="a"|SeqData$ref[k]=='g'){
-                      #        TrvMutNum2<-SeqData[k,"c"]+SeqData[k,"t"]}
-                      #if (SeqData$ref[k]=="c"|SeqData$ref[k]=="t"){
-                      #        TrvMutNum2<-SeqData[k,"a"]+SeqData[k,"g"]}
-                      #SeqData$freq.transv.ref[k]<-TrvMutNum2/SeqData$TotalReads[k]
-                      
+ 
                       #Frequenceis for specific transversion mutations (1 & 2)
                       Tvs1Num<-SeqData[k,which(c("a","c","g","t")==(transv1(SeqData$MajNt[k])))]
                       Tvs2Num<-SeqData[k,which(c("a","c","g","t")==(transv2(SeqData$MajNt[k])))]
@@ -90,14 +77,9 @@ for (i in 1:length(SIVFiles)){
                       SeqData$freq.transv1.ref[k]<-Tvs1rNum/SeqData$TotalReads[k]
                       SeqData$freq.transv2.ref[k]<-Tvs2rNum/SeqData$TotalReads[k]
                       
-                      #mutation frequencies of all transversion mutataions
-                      #if (SeqData$MajNt[k]=="a"|SeqData$MajNt[k]=='g'){
-                      #          TrvMutNum<-SeqData[k,"c"]+SeqData[k,"t"]}
-                      #if (SeqData$MajNt[k]=="c"|SeqData$MajNt[k]=="t"){
-                      #          TrvMutNum<-SeqData[k,"a"]+SeqData[k,"g"]}
+                      #mutation frequencies of all transversion mutations
                       SeqData$freq.transv[k]<-SeqData$freq.transv1[k]+SeqData$freq.transv2[k]
                       SeqData$freq.transv.ref[k]<-SeqData$freq.transv1.ref[k]+ SeqData$freq.transv2.ref[k]
-                      
                       
                       #Frequencies of all SNPs (no indels)
                       AllMutNum<-SeqData$TotalReads[k]-MajNum
@@ -105,23 +87,22 @@ for (i in 1:length(SIVFiles)){
                       
                       SeqData$freq.mutations[k]<-AllMutNum/SeqData$TotalReads[k]
                       SeqData$freq.mutations.ref[k]<-AllMutNum2/SeqData$TotalReads[k]
-                      
                       }
         }
                 
-        write.csv(SeqData,paste0("Output/SeqData_PIDcon/SeqData_",id,".con.csv"))
+        write.csv(SeqData,paste0("Output/SeqData_PID/SeqData_",id,".con.csv"))
 
 }
 
 
 ## Max and Average read depth ###
 
-csvs<-list.files("Output/CSV_PIDcon/")
+csvs<-list.files("Output/CSV_PID/")
 depth<-data.frame(files=csvs)
 for (i in 1:length(csvs)){
     id<-substr(paste(csvs[i]),start=1,stop=7)
     
-    df<-read.csv(paste0("Output/CSV_PIDcon/",csvs[i]), row.names = 1, stringsAsFactors = F)
+    df<-read.csv(paste0("Output/CSV_PID/",csvs[i]), row.names = 1, stringsAsFactors = F)
     ave<-mean(df$TotalReads, na.rm=T)
     mx<-max(df$TotalReads, na.rm=T)
     nb<-substr(id, start=6,stop=7)
