@@ -5,8 +5,8 @@ source("Rscripts/BaseRscript.R")
 
 ###########################
 
-#SIVFiles<-list.files("Output/CSV_PID/",pattern="csv")
-SIVFiles<-list.files("Output/CSV_PID/",pattern="^Run4.*PID.csv")
+SIVFiles<-list.files("Output/CSV_PID/",pattern="csv")
+#SIVFiles<-list.files("Output/CSV_PID/",pattern="^Run0|^Run2|^Run3")
 
 coding.start<-190
 coding.end<-681

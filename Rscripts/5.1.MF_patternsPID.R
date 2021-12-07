@@ -72,8 +72,8 @@ for (i in 1:length(monkeys2)){
     monkey<-names(monkeys2)[i]
     tbweek<-tbs$tb[tbs$ids==monkey]
     
-    #Plot<-list()
-    #Plot[[1]]<-Ps2
+    Plot<-list()
+    Plot[[1]]<-Ps2
     summary<-data.frame(File.name=sample$File.name)
     for (j in 1:length(ovDF)){
         df<-ovDF[[j]]
@@ -88,21 +88,21 @@ for (i in 1:length(monkeys2)){
         summary$Ave.diversity[j]<-div
         summary$Ave.divergence[j]<-ave
         
-        #Plot[[j+1]]<-ggplot(data=df, aes(x=pos, y=freq.mutations.ref))+
-        #    ylab("Mutation frequency")+xlab("")+ylim(0,1)+
-        #    geom_point(size=0.7, color=col)+theme_bw()+
-        #    ggtitle(paste0(monkey," Week ",week," ",ts))+
-        #    theme(plot.title = element_text(size=11))+
-        #    annotate(geom='text', x=600, y=0.96, label=paste0("MF: ", ave,"%"),color ='gray30', size=3,hjust=0)+
-        #    annotate(geom='text', x=600, y=0.82, label=paste0("Diversity: ", div,"%"),color ='gray30', size=3,hjust=0)
+        Plot[[j+1]]<-ggplot(data=df, aes(x=pos, y=freq.mutations.ref))+
+            ylab("Mutation frequency")+xlab("")+ylim(0,1)+
+            geom_point(size=0.7, color=col)+theme_bw()+
+            ggtitle(paste0(monkey," Week ",week," ",ts))+
+            theme(plot.title = element_text(size=11))+
+            annotate(geom='text', x=600, y=0.96, label=paste0("MF: ", ave,"%"),color ='gray30', size=3,hjust=0)+
+            annotate(geom='text', x=600, y=0.82, label=paste0("Diversity: ", div,"%"),color ='gray30', size=3,hjust=0)
         
     }
     
     Sum<-rbind(Sum,summary)
     
-    #pdf(paste0("Output/MF_PID/withRun7/MF.",monkey,".pdf"), width = 7, height = length(ovDF)*2)
-    #do.call(grid.arrange, c(Plot, ncol=1))
-    #dev.off()
+    pdf(paste0("Output/MF_PID/MFsummary/MF.",monkey,".pdf"), width = 7, height = length(ovDF)*2)
+    do.call(grid.arrange, c(Plot, ncol=1))
+    dev.off()
 }
 
 

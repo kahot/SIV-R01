@@ -1,5 +1,5 @@
 library(ggplot2)
-#find the unique seqeunces from a fasta file
+#find the unique sequences from a fasta file
 funiq<-function(all.fa,uniq.fa)
 {
     all<-unlist(all.fa)

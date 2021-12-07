@@ -4,7 +4,7 @@ source("Rscripts/BaseRscript.R")
 
 #get the file name
 SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="con.csv")
-SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="Run4")
+SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="Run3")
 
 #Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   

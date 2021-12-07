@@ -5,7 +5,7 @@ library(plyr)
 library(stringr)
 
 ### Read the mapped sam file
-fList<-list.files("~/programs/PID-master/Sam/",recursive = T, pattern="^Run4.+clipped.sam") 
+fList<-list.files("~/programs/PID-master/Sam/",recursive = T, pattern="^Run2.+clipped.sam") 
 coln<-c('QNAME','Flag','RefName','Pos','MapQ','cigar','MRNM','Mpos','isize','seq','Qual','tag1','tag2','tag3','tag4','tag5','tag6')
 
 for ( i in 1:length(fList)){
@@ -90,8 +90,8 @@ for ( i in 1:length(fList)){
             
             if (end<startR){
                 n<-startR-end-1-gapr
-                Cons<-c(f1,rep("N", times=n),r1)
-                
+                if (n<1) Cons<-c(f1, r1)
+                else Cons<-c(f1,rep("N", times=n),r1)
             }
             ## remove the sequences that have more than 300 Ns
             n<-length(Cons[Cons=="N"])
