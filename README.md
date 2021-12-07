@@ -46,8 +46,7 @@ done
 	• Run all of them. Output is sorted bam files and bam index files, saved in Output/bam_PID/
 
 	
-# From here, you can conduct either diversity/divergence (mutation frequency) analysis (Step 5) 
-#  or focus on interesting (high-frequency) sites and analyze 'genotype' data 
+## From here, you can conduct either diversity/divergence (mutation frequency) analysis (Step 5) or focus on interesting (high-frequency) sites and analyze 'genotype' data 
   
 ### Step 5. Use the pileup to create mutation frequency tables and conduct analyses. Use... 
     • Scripts 2 to 4.1 create frequency tables from each bam file.
