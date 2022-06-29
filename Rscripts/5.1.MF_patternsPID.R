@@ -2,29 +2,15 @@ library(ggplot2)
 library(gridExtra)
 library(colorspace)
 library(DataCombine)
-#source("Rscripts/baseRscript2.R")
+library(reshape2)
 cols<-qualitative_hcl(6, palette="Dark3")
 
-# read all Overview files:
-#Use 'Filtered' overviews for those with over 100 average read 
-depth<-read.csv("Output/ReadDeapth_all.csv", row.names = 1)
-over100<-depth$File.name[depth$Average>100]
-
-#(except for Run0_14 (500 reads) and some Run5 files with high read depths) 
+# Read all Overview files:
 filtered<-list.files("Output/OverviewF_PID/",pattern=".csv")
-
-nonFiltered<-list.files("Output/Overview_PID/", pattern=".csv")
-
 Overview<-list()
 for (i in 1:length(filtered)){ 
         id<-substr(paste(filtered[i]),start=1,stop=7)
-    
-        if (id %in% over100) df<-read.csv(paste0("Output/OverviewF_PID/",filtered[i]),stringsAsFactors=F, row.names = 1)
-        else {
-            df<-read.csv(paste0("Output/Overview_PID/",nonFiltered[i]),stringsAsFactors=F, row.names = 1) 
-            df[which(df$TotalReads<10), 7:16]<-NA #filter at 10
-            }
-        
+        df<-read.csv(paste0("Output/OverviewF_PID/",filtered[i]),stringsAsFactors=F, row.names = 1)
         Overview[[i]]<-df
         names(Overview)[i]<-id
 }
@@ -51,12 +37,12 @@ for (i in 1:length(list.animal)){
 tbs<-read.csv("Data/TBinfection.week.csv",stringsAsFactors = F)
 
 monkeys2<-monkeyList[tbs$ids]
-
+monkeys<-names(monkeys2)
 #####   #Plot the stock virus ######
 stock<-Overview[[which(names(Overview)=="Run0_17")]]
 ave<-format(round(mean(stock$freq.mutations.ref, na.rm=T)*100,2),nsmall = 2)
 
-Ps2<-ggplot(data=stock, aes(x=pos, y=freq.Ts.ref))+
+Ps2<-ggplot(data=stock, aes(x=pos, y=freq.mutations.ref))+
     ylab("Mutation frequency")+xlab("")+ylim(0,1)+
     geom_point(size=0.7, color=cols[4])+theme_bw()+
     ggtitle("Stock")+theme(plot.title = element_text(size=12))+
@@ -133,89 +119,52 @@ for (i in 1:length(monkeys2)){
             annotate(geom='text', x=600, y=40, label=paste0("Diversity: ", div,"%"),color ='gray30', size=3,hjust=0)
         
     }
-    pdf(paste0("Output/MF_PID/withRun7/MVF.",monkey,".pdf"), width = 7, height = length(ovDF)*2)
+    pdf(paste0("Output/MF_PID/MFsummary/MVF.",monkey,".pdf"), width = 7, height = length(ovDF)*2)
     do.call(grid.arrange, c(Plot, ncol=1))
     dev.off()
 }
 
 
-## Delete below after resequencing Run 2 samples ##
-
-### LOOK at the read depth vs. trasnv freq (for low quality samples (Run2))#### 
-## Run2 samples are messy in the middle (pos 485 - 550ish) ##
-df<-Overview[["Run2_10"]]
-mean(df$freq.Ts.ref, na.rm=T)
-#0.01476899
-mean(df$freq.transv.ref, na.rm=T)
-#0.02486384
-
-plot(df$freq.transv.ref)
-plot(df$TotalReads)
-
-pt<-list()
-pt[[1]]<-ggplot(data=df, aes(x=pos, y=freq.mutations*100))+
-    ylab("Diversity")+xlab("")+ylim(0,50)+
-    geom_point(size=0.7, color=col)+theme_bw()
-pt[[2]]<-ggplot(data=df, aes(x=pos, y=freq.Ts*100))+
-    ylab("Diversity Ts")+xlab("")+ylim(0,50)+
-    geom_point(size=0.7, color=col)+theme_bw()
-pt[[3]]<-ggplot(data=df, aes(x=pos, y=freq.transv*100))+
-    ylab("Diversity Tvs")+xlab("")+ylim(0,50)+
-    geom_point(size=0.7, color=col)+theme_bw()
-
-pt[[4]]<-ggplot(data=df, aes(x=pos, y=TotalReads))+
-    ylab("Total Reads")+xlab("")+
-    geom_point(size=0.7, color="blue")+theme_bw()
-
-pdf(paste0("Output/MF_PID/withRun5.6/MVF.vs.Reads.A22117.week16.pdf"), width = 7, height = 8)
-do.call(grid.arrange, c(pt, ncol=1))
-dev.off()
-
-pt<-list()
-for (i in 1: length(Overview)){
-    df<-Overview[[i]]
-    filename<-names(Overview)[i]
-    mk<-samples$Monkey[samples$File.name==filename]
-    wk<-samples$Week[samples$File.name==filename]
-    pt[[i]]<-ggplot(data=df, aes(x=pos, y=TotalReads))+
-        ylab("Total Reads")+xlab("")+
-        geom_point(size=0.7, color="blue")+theme_bw()+
-        ggtitle(paste(filename, mk, "Week", wk))+
-        theme(plot.title = element_text(size=11))
-}
-pdf(paste0("Output/MF_PID/withRun5.6/MVF.vs.Reads.allfiles.pdf"), width = 15, height = 97)
-do.call(grid.arrange, c(pt, ncol=3))
-dev.off()
-
 
 ####
 ### Assessing the quality of each samples: Compare # PID reads vs. diversity
+#remove the center portion for diversity comparison
+Ov<-list()
+for (i in 1:length(Overview)){
+    df<-Overview[[i]]
+    id<-names(Overview[i])
+    #remove pos 423 to 610
+    df<-df[df$pos<423|df$pos>610,]
+    Ov[[i]]<-df
+    names(Ov)[i]<-id
+}
+
 
 reads<-read.csv("Output/ReadDeapth_all.csv", row.names = 1, stringsAsFactors = F)
 
 Summary<-data.frame(File.name=names(Overview))
-for(i in 1:length(Overview)){
-    df<-Overview[[i]]
+for(i in 1:length(Ov)){
+    df<-Ov[[i]]
     Summary$Divergence[i]<-round(mean(df$freq.mutations.ref, na.rm=T)*100,digit= 2)
     Summary$Diversity[i]<-round(mean(df$freq.mutations, na.rm=T)*100,2)
 }
 
 Summary<-merge(reads,Summary, by="File.name")
 plot(Summary$Diversity~Summary$Average, pch=16)
-cor.test(Summary$Diversity, Summary$Average, method="kendall")
-#p-value = 0.6702
+cor.test(Summary$Diversity, Summary$Average, method="spearman")
+#p-value = 0.5945
+#rho 0.05179523 
 
 Summary$File.name<-factor(Summary$File.name, levels=paste(Summary$File.name))
 ggplot(Summary, aes(x=File.name, y=Diversity))+
-    geom_point()
+    geom_point()+theme(axis.text.x = element_text(angle=90, size=5))
+ggsave("Output/MF_PID/AveDiversity_allsamples.pdf", width = 8, height = 5)
 ggplot(Summary, aes(x=File.name, y=Average))+
-    geom_point()+ylab('Read depth')+xlab('')
-
+    geom_point()+ylab('Read depth')+xlab('')+
+    theme(axis.text.x = element_text(angle=90, size=5))
+ggsave("Output/MF_PID/ReadDepth_allsamples.pdf", width = 8, height = 5)
 #No correlation between read depths and diversity
 
-Summary<-merge(Summary, samples[,c("File.name","Monkey","Week","Coinfection")],by="File.name")
-colnames(Summary)[4:5]<-c("Ave.reads","Max.read")
-write.csv(Summary,"Output/Summary.Diversity_all.csv")
 
 
 
@@ -223,7 +172,6 @@ write.csv(Summary,"Output/Summary.Diversity_all.csv")
 
 #### Compare the tissue and plasma diversity (%) at necropsy
 
-monkeys
 Nec<-data.frame()
 Mid<-data.frame()
 Div<-data.frame(Animal=monkeys)
@@ -275,17 +223,18 @@ Div2m<-melt(Div2[,c("Animal","Midpoint","Necropsy","Coinfection")], id.vars=c("A
 colnames(Div2m)[3:4]<-c("Timepoint","Diversity_difference") 
 
 ggplot(Div2m, aes(x=Animal, y=Diversity_difference, fill=Timepoint, color=Coinfection))+
-    geom_bar(stat="identity", position=position_dodge(width = 0.8))+
+    geom_point(position=position_dodge(width = 0.8), shape=21, size=3)+
     ylab("Divrsity difference (Plasma-Tissues)")+xlab("")+
     theme_bw()+
     scale_fill_manual(values=cols[c(6,5)])+
     scale_color_manual(values=c("red","white"), 
-            guide=guide_legend(override.aes=list(linetype=c(1,1),shape=c(NA,NA),color=c("red","white"), fill="gray90"))) +
+            guide=guide_legend(override.aes=list(linetype=c(1,1),shape=c(21,21),color=c("red","white"), fill="gray90"))) +
     theme(panel.grid.major.x = element_blank())+
-    geom_vline(xintercept = (1:(nrow(Div2)-1))+0.5, color="gray80", size=0.3)
+    geom_vline(xintercept = (1:(nrow(Div2)-1))+0.5, color="gray80", size=0.3)+
+    geom_hline(yintercept = 0, color="gray", size=0.3)
 
 ggsave("Output/MF_PID/Diversity_difference.Tissuesvs.Plasma.pdf", width = 7, height = 4)
-
+#most tissues have higher dieversity. 
 
 
 
@@ -301,7 +250,7 @@ for (i in 1:length(morder)){
     ovDF<-Overview[as.vector(sample$File.name)]
     monkey<-morder[i]
     tbweek<-tbs$tb[tbs$ids==monkey]
-    diversity<-sample[,c(2,3,5,7)]
+    diversity<-sample[,c("File.name","Monkey","Week","Tissue")]
     monkey<-gsub("A",'',monkey)
     for (j in 1:length(ovDF)){
         df<-ovDF[[j]]
@@ -328,72 +277,8 @@ for (i in 1:length(morder)){
     
     
 }
-pdf("Output/MF_PID/withRun7/Diversity_overtime_all.pdf", width = 8.5, height = 11)
+pdf("Output/MF_PID/Diversity_overtime_all.pdf", width = 8.5, height = 11)
 do.call(grid.arrange, c(plots, ncol=2))
 dev.off()
-
-
-### Overtime in one plot (Plasma only)
-
-monkeys2<-monkeyList[tbs$ids]
-#remove the monkey with Tissue only
-monkeys<-names(monkeys2)
-monkeys<-monkeys[monkeys!="A34019"]
-monkeys3<-monkeys2[monkeys]
-
-Div<-data.frame()
-for (i in 1:length(monkeys)){
-    sample<-monkeys2[[monkeys[i]]]
-    sample<-sample[sample$Tissue=="Plasma",]
-    sample<-sample[order(sample$Week),]
-    ovDF<-Overview[as.vector(sample$File.name)]
-    monkey<-monkeys[i]
-    tbweek<-tbs$tb[tbs$ids==monkey]
-    diversity<-sample[,c(3,5)]
-    for (j in 1:length(ovDF)){
-        df<-ovDF[[j]]
-        diversity$Diversity[j]<-mean(df$freq.mutations, na.rm=T)*100
-        diversity$MF[j]<-mean(df$freq.mutations.ref, na.rm=T)*100
-    }
-    
-    diversity<-InsertRow(diversity,c(monkey,0,mean(stock$freq.mutations.ref, na.rm=T)*100,mean(stock$freq.mutations.ref, na.rm=T)*100 ),1)
-    diversity$Monkey<-gsub("A",'',monkey)
-    
-    diversity$Week<-as.integer(diversity$Week)
-    diversity$Diversity<-as.numeric(diversity$Diversity)
-    diversity$MF<-as.numeric(diversity$MF)
-    
-    Div<-rbind(Div, diversity)
-    
-    
-}
-
-tbs2<-tbs[tbs$ids!="A34019",]
-
-ggplot(data=Div, aes(x=Week, y=Diversity, color=Monkey))+
-    ylab("% Diversity")+xlab("")+
-    geom_point(size=2)+theme_bw()+
-    geom_line()+
-    #ylim(0.4,2.2)+
-    #theme(plot.title = element_text(size=11))+
-    #scale_color_manual(values=cols[c(1,6,4,2,3)])+
-    theme(panel.grid.major.x  = element_blank(),panel.grid.minor.x = element_blank())+
-geom_vline(data=tbs2, aes(xintercept=tbs2$tb,color=tbs2$ids),linetype = "dashed", size=0.5)
-    #scale_x_continuous(breaks=seq(0,32,2), limits = c(0,32))+
-    
-ggsave("Output/MF_PID/Diversity_overtime_all.pdf", width = 10, height = 6)
-
-
-plots[[i]]<-ggplot()+
-    ylab("Diversity")+xlab("")+
-    geom_point(data=diversity, aes(x=Week, y=Diversity, color=Tissue), size=2)+theme_bw()+
-    ggtitle(paste0(monkey))+ylim(0.4,2.2)+
-    theme(plot.title = element_text(size=11))+
-    scale_color_manual(values=cols[c(1,6,4,2,3)])+
-    theme(panel.grid.major.x  = element_blank(),panel.grid.minor.x = element_blank())+
-    geom_vline(xintercept=tbweek, col="deeppink")+
-    scale_x_continuous(breaks=seq(0,32,2), limits = c(0,32))+
-    geom_line(data=diversity[diversity$Tissue=="Plasma"|diversity$Tissue=="Stock",],aes(x=Week, y=Diversity), color=cols[6])
-
 
 

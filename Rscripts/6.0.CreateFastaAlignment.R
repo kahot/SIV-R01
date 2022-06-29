@@ -1,3 +1,5 @@
+#Create a fasta file for each monkey with PID concensus sequences
+
 library(reshape)
 library(msa)
 library(bios2mds)
@@ -5,7 +7,7 @@ library(DataCombine)
 library(GenomicAlignments)
 source("Rscripts/baseRscript.R")
 
-bams<-list.files("Output/bam_PID/",pattern="^Run5.+.bam$")
+bams<-list.files("Output/bam_PID/",pattern="^Run8.+bam$")
 
 #parameter setting for stackStringsFromBam
 gr <- GRanges(seqnames="AY032751env",  IRanges(215, 691))
@@ -26,3 +28,5 @@ for (i in 1:length(bams)){
 ### cd to "Output" directory
 ### >     LC_ALL=C find PID_Con_Alignment -type f -exec sed -i "" 's/+/-/g' {} \;
 
+#For Run2 files, use a different method to create an alignment files.
+# Currently the sequences with end portion only were simply removed

@@ -8,6 +8,7 @@ cols2<-qualitative_hcl(6, palette="Dark3")
 
 #get the file name
 SIVFiles_SeqDataP<-list.files("Output/SeqData_PID/",pattern="SeqData")
+#SIVFiles_SeqDataP<-list.files("Output/SeqData_PID/",pattern="Run8")
 
 
 #where do the indels occur?

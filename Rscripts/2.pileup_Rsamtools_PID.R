@@ -5,7 +5,7 @@ source("Rscripts/pileupFreq.R")
 
 #number of samples to process
 bamfiles<-list.files("Output/bam_PID/",pattern="bam$")
-bamfiles<-list.files("Output/bam_PID/",pattern="^Run3_.*bam$")
+bamfiles<-list.files("Output/bam_PID/",pattern="^Run8_.*bam$")
 
 
 #dir.create("Output/CSV_PIDcon/")

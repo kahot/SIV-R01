@@ -1,4 +1,4 @@
-library(reshape)
+library(reshape) 
 library(ggpubr)
 library(ggthemes)
 library(plotrix)
@@ -14,13 +14,13 @@ cols2<-qualitative_hcl(6, palette="Dark3")
 
 #File processed without primerID
 ov1<-read.csv("Output/Overview/Run3_9__overview.csv", row.names = 1, stringsAsFactors = F)
-colnames(ov1)[1]<-"posF"
-ov1$pos<-ov1$posF-54
+#colnames(ov1)[1]<-"posF"
+#ov1$pos<-ov1$posF-54
 
 #dir.create("Output/MF_PID/Comparison")
 
 #PID-Master processed
-ov2<-read.csv("Output/Overview_PIDcon/Run3_9__overview.csv", row.names = 1, stringsAsFactors = F)
+ov2<-read.csv("Output/Overview_PID/Run3_9__overview.csv", row.names = 1, stringsAsFactors = F)
 
 mf1<-ov1[,c("pos","freq.Ts")]
 mf2<-ov2[,c("pos","freq.Ts")]
@@ -36,12 +36,12 @@ ggplot(data=Ts.m, aes(x=pos, y=value, color=variable))+
         xlab("ENV position")+
         scale_y_continuous(trans = 'log10', labels=label_scientific)+
             theme(legend.title=element_blank())
-ggsave("Output/MF_PID/Comparison/MFplot_log.pdf", width = 8, height = 4)
+ggsave("Output/MF_PID/Comparison/MF_comparison_run3_9_plot_log.pdf", width = 8, height = 4)
     
     
 ggplot(data=Ts.m, aes(x=pos, y=value, color=variable))+
         geom_point(size=0.7)+theme_bw()+ theme(legend.title=element_blank())
-ggsave("Output/MF_PID/Comparison/MFplot.pdf", width = 8, height = 4)
+ggsave("Output/MF_PID/Comparison/MF_comparison_run3_9_plot.pdf", width = 8, height = 4)
     
   
     
@@ -54,7 +54,7 @@ ggplot(data=Ts, aes(x=pos, y=abs(diff)))+
     scale_y_continuous(trans = 'log10', labels=label_scientific)+
     theme(legend.title=element_blank())
 ggsave("Output/MF_PID/Comparison/MF_diff.log.noIDvsPID.pdf", width = 7.5, height = 4)    
-mean(abs(Ts$diff), na.rm=T) #0.01858248
+mean(abs(Ts$diff), na.rm=T) #0.002075478
 
 ggplot(data=Ts, aes(x=pos, y=diff))+
     geom_point(size=0.5, color="blue")+theme_bw()+ylab("Difference in Mutation frequency")+

@@ -5,7 +5,7 @@ library(plyr)
 library(stringr)
 
 ### Read the mapped sam file
-fList<-list.files("~/programs/PID-master/Sam/",recursive = T, pattern="^Run2.+clipped.sam") 
+fList<-list.files("~/programs/PID-master/Sam/",recursive = T, pattern="^Run8.+clipped.sam") 
 coln<-c('QNAME','Flag','RefName','Pos','MapQ','cigar','MRNM','Mpos','isize','seq','Qual','tag1','tag2','tag3','tag4','tag5','tag6')
 
 for ( i in 1:length(fList)){

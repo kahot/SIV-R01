@@ -5,25 +5,13 @@ library(DataCombine)
 source("Rscripts/baseRscript.R")
 cols2<-qualitative_hcl(6, palette="Dark3")
 
-SIVFiles_overview<-list.files("Output/OverviewF_PIDcon/",pattern=".csv")
+SIVfiles<-list.files("Output/OverviewF_PID/",pattern=".csv")
 
-SIVfiles<-list.files("Output/Overview_PIDcon/", pattern="Run5|Run6|Run7")
-SIVfiles<-SIVfiles[SIVfiles!="Run5_12_overview.csv"]
-SIVfiles<-SIVfiles[SIVfiles!="Run5_13_overview.csv"]
-SIVfiles<-SIVfiles[SIVfiles!="Run5_15_overview.csv"]
-SIVfiles<-c(SIVfiles,"Run0_14_overview.csv")
 Overview<-list()
-for (i in 1:length(SIVFiles_overview)){ 
-    overviews<-read.csv(paste0("Output/OverviewF_PIDcon/",SIVFiles_overview[i]),stringsAsFactors=F, row.names = 1)
+for (i in 1:length(SIVfiles)){ 
+    overviews<-read.csv(paste0("Output/OverviewF_PID/",SIVfiles[i]),stringsAsFactors=F, row.names = 1)
     Overview[[i]]<-overviews
-    names(Overview)[i]<-substr(paste(SIVFiles_overview[i]),start=1,stop=7)
-}
-n<-length(SIVFiles_overview)
-
-for (i in (n+1):(length(SIVfiles)+n)){
-    df<-read.csv(paste0("Output/Overview_PIDcon/", SIVfiles[i-n]),stringsAsFactors=F, row.names = 1)
-    Overview[[i]]<-df
-    names(Overview)[i]<-substr(paste(SIVfiles[i-n]),start=1,stop=7)
+    names(Overview)[i]<-substr(paste(SIVfiles[i]),start=1,stop=7)
 }
 
 
@@ -50,8 +38,11 @@ monkeys2<-monkeyList[tbs$ids]
 
 ######################
 #Look for sites with mutation freq (diversity) >10% 
+Ref<-read.csv("Output/Overview.ref.csv", stringsAsFactors = F, row.names = 1)
+
+
 Pos<-list()
-PosType<-list()
+Sites<-list()
 for (i in 1:length(monkeys2)){
     monkey<-names(monkeys2)[i]
     print(monkey)
@@ -64,23 +55,36 @@ for (i in 1:length(monkeys2)){
     sites<-sites[!is.na(sites)]
     sites<-sites[order(sites)]
     df1<-data.frame(pos=sites, type="Ts")
+    df1$Mutation<-Ref$Type.r[Ref$pos %in% sites]
     
     sites1<-lapply(ovDF, function(x) x$pos[x$freq.transv1.ref>0.1])
     sites1<-unique(unlist(sites1))
     sites1<-sites1[!is.na(sites1)]
     sites1<- sites1[order(sites1)]
-    df2<-data.frame(pos=sites1, type="Tv1")
+    if (length(sites1)>0) {
+        df2<-data.frame(pos=sites1, type="Tv1")
+        df2$Mutation<-Ref$Type.tv1.r[Ref$pos %in% sites1]
+        }
+    if (length(sites1)==0) df2<-data.frame(pos=NA, type="Tv1", Mutation=NA)
     
     sites2<-lapply(ovDF, function(x) x$pos[x$freq.transv2.ref>0.1])
     sites2<-unique(unlist(sites2))
     sites2<-sites2[!is.na(sites2)]
     sites2<-sites2[order(sites2)]
-    df3<-data.frame(pos=sites2, type="Tv2")
+    if (length(sites2)>0) {
+        df3<-data.frame(pos=sites2, type="Tv2")
+        df3$Mutation<-Ref$Type.tv2.r[Ref$pos %in% sites2]
+        }
+    if (length(sites2)==0) df3<-data.frame(pos=NA, type="Tv2", Mutation=NA) 
     
     mutSites<-rbind(df1,rbind(df2,df3))
+    
+    mutSites<-mutSites[!is.na(mutSites$pos),]
     msites<-unique(c(sites,sites1,sites2))
     msites<-msites[order(msites)]
-    
+    mutSites$Monkey<-monkey
+    Sites[[i]]<-mutSites
+    Pos[[i]]<-msites
     
     #select only the positions in msites
     mfDF<-lapply(ovDF, function(x) x<-x[x$pos %in% sites,])
@@ -118,64 +122,57 @@ for (i in 1:length(monkeys2)){
     colorder<-order(colnames(M))
     M<-M[,colorder]
     
-    PosType[[i]]<-mutSites
-    names(PosType)[i]<-monkey
     Pos[[i]]<-msites
     names(Pos)[i]<-monkey
                
-       
-    
     Mm<-melt(M, id.vars = "Week")
     colnames(Mm)[2:3]<-c("Position", "MF")
     rown<-ceiling((ncol(M)-1)/5)
     
     tbweek<-tbs$tb[tbs$ids==monkey]
-    #ggplot(data=Mm, aes(x=Week, y=MF))+
-    #    ylab("Mutation frequency")+xlab("Weeks")+
-    #    facet_wrap(~ Position, nrow=rown, ncol=5)+
-    #    geom_point(size=2, color=cols2[1])+theme_bw()+ggtitle(paste(monkey))+
-    #    geom_vline(xintercept=tbweek, col="blue")
-    #    ggsave(paste0("Output/Timeseries_PID/", monkey, ".con.all.pdf"), heigh=rown*1.5, width =11.5)
+    ggplot(data=Mm, aes(x=Week, y=MF))+
+        ylab("Mutation frequency")+xlab("Weeks")+
+        facet_wrap(~ Position, nrow=rown, ncol=5)+
+        geom_point(size=2, color=cols2[1])+theme_bw()+ggtitle(paste(monkey))+
+        geom_vline(xintercept=tbweek, col="blue")
+    ggsave(paste0("Output/Timeseries_PID/", monkey, ".allsites.persite.pdf"), heigh=rown*1.5, width =11.5)
 }
 
 
-#Find the over lapping positions
-positions<-unique(unlist(unname(Pos)))
-positions<-positions[order(positions)]
-cpos<-data.frame(Pos=positions)
-for (i in 1:length(monkeys2)){
-    vec<-Pos[[i]]
-    
-    cpos[,names(monkeys2)[i]]<-sapply(cpos$Pos,function(x) ifelse(x %in% vec, "Y", "N"))
-}
+#Find the overlapping positions
+hPos<-do.call(rbind, Sites)
+#Remove the synonymous mutations
+hPos<-hPos[hPos$Mutation!="syn",]
 
-cpos$codon<-apply(cpos["Pos"], 1, function(x) if(x%%3==0) x=3 else x=x%%3)
+#create an ID for mutations
+hPos$ID<-paste0(hPos$pos,"_",hPos$type)
+positions<-unique(hPos$ID) #53
 
-df<-read.csv("Output/Overview.ref.csv", stringsAsFactors = F, row.names = 1)
-df<-df[,-16]
-df<-df[df$pos %in% positions,]
-colnames(cpos)[1]<-"pos"
-cpos<-merge(cpos, df, by="pos")
-cpos$occurence<-apply(cpos[,2:11], 1, function(x) length(x[x=="Y"]))
+cpos<-data.frame(Mutation=positions)
+cpos$Pos<-as.integer(gsub("_.*",'',cpos$Mutation))
+cpos$Type<-gsub("\\d\\d\\d_",'',cpos$Mutation)
 
-#Remove the codon position 3 and all synonymous
-cpos2<-cpos[!(cpos$Type.r=="syn"&cpos$Type.tv1.r=="syn"&cpos$Type.tv2.r=="syn"),]
-#68 positions
-write.csv(cpos2, "Output/MF_PID/HighFreq/HighMutfreq_sites_all.csv")
+cpos<-cpos[order(cpos$Pos),]
+
+counts<-data.frame(table(hPos$ID))
+colnames(counts)<-c("Mutation","Freq")
+
+cpos<-merge(cpos,counts, by="Mutation")
+
+write.csv(cpos, "Output/MF_PID/HighFreq/HighMF_sites.csv") #53 total
 
 
+#Find the common sites that appear in >5 samples
+high<-cpos[cpos$Freq>5,] #14 mutations
+highpos<-unique(high$Pos) #13 sites
 
-#Find the common sites that appear in many samples
-
-high<-cpos2[cpos2$occurence>5,] #22 sites
-highpos<-high$pos
 
 df<-stock
 
 for (j in 1:length(highpos)){
     position<-highpos[j]
     #nucleotide at Ref, Ts, tv1, and tv2
-    re<-df$ref[df$pos==position]
+    re<-Ref$ref[Ref$pos==position]
     Ts<-transition(re)
     tv1<-transv1(re)
     tv2<-transv2(re)
@@ -207,45 +204,34 @@ for (j in 1:length(highpos)){
     
     Freq$nuc<-factor(Freq$nuc,levels=c("a","c",'g','t'))
     #type of mutation and codon position
-    #which nuc is the second highest in freq?
     
     type<-high$Type.r[high$pos==position]
     type1<-high$Type.tv1.r[high$pos==position]
     type2<-high$Type.tv2.r[high$pos==position]
     
-    codon<-high$codon[high$pos==position]
-    
     ggplot(data=Freq, aes(x=Week, y=MF, color=nuc))+
         ylab("Mutation frequency")+xlab("Week")+ylim(0,1)+
-        facet_wrap(~ Monkey, nrow=5, ncol=2)+
+        facet_wrap(~ Monkey, nrow=4, ncol=3)+
         geom_point(size=1.5)+theme_bw()+
         scale_color_manual(values=cols2[c(1,3,5,2)], label=c("A","C",'G',"T"))+
         geom_path(data=Freq[Freq$Tissue=="Plasma",], aes(x=Week, y=MF))+
         theme(legend.title = element_blank())+
         geom_vline(aes(xintercept=Tbweek), col="blue")+
-        ggtitle(paste0("Pos.",position," Codon=",codon," Type=",type," ", type1," ", type2) )+theme(plot.title = element_text(size=10), axis.title.y = element_text(size=8))
-    ggsave(paste0("Output/MF_PID/HighFreq/Pos", position, "_overtime.pdf"), width = 8, height=8)
+        ggtitle(paste0("Pos.",position) )+theme(plot.title = element_text(size=10), axis.title.y = element_text(size=8))
+    ggsave(paste0("Output/MF_PID/HighFreq/Pos", position, "_overtime.pdf"), width = 12, height=8)
 }
    
 
-# High freq position summary
-table(cpos2$codon)
-# 1  2  3 
-#23 23 16  
-table(high$codon)
-# 1  2  3 
-#4 13  5 
-table(cpos2$occurence)
-# 1  2  3  4  5  6  7  8  9 10 
-#20  6  5  6  3  1  4  4  6  7  
-table(high$occurence)
-#6  7  8  9 10 
-#1  4  4  6  7 
 
-table(high$makesCpG.r)
-table(high$makesCpG.tvs.r)
-table(high$RefAA)
-table(high$MUTAA.r)
+table(cpos$Freq, cpos$Type)
+# 1  2  3  5  6  8  10 11 
+#23  8  4  3  4  1   4  6
+#6 mutations occurred in all monkeys. 1 occurred in 10. 
+
+#highpos
+#428 is not interesting. Remove it
+
+highpos<-highpos[highpos!=428]
 
 summary<-data.frame(pos=highpos)
 for (j in 1:length(highpos)){
@@ -275,6 +261,10 @@ for (j in 1:length(highpos)){
     summary$Type.1[j]<-ave$Type[1]
     summary$Type.2[j]<-ave$Type[2]    
     
+    if(summary$Type.1[j]=="Ts")  summary$mutNT[j]<-transition(summary$ref[j])
+    if(summary$Type.1[j]=="Tv1") summary$mutNT[j]<-transv1(summary$ref[j])
+    if(summary$Type.1[j]=="Tv2") summary$mutNT[j]<-transv2(summary$ref[j])
+    
     if(summary$Type.1[j]=="Ts") summary$aa1[j]<-stock$MUTAA[stock$pos==position]
     if(summary$Type.2[j]=="Ts") summary$aa2[j]<-stock$MUTAA[stock$pos==position]
     if(summary$Type.1[j]=="Tv1") summary$aa1[j]<-stock$TVS1_AA[stock$pos==position]
@@ -296,8 +286,14 @@ for (j in 1:length(highpos)){
     if(summary$Type.1[j]=="Tv2") summary$bigAA1[j]<-stock$bigAAChange.tv2[stock$pos==position]
     if(summary$Type.2[j]=="Tv2") summary$bigAA2[j]<-stock$bigAAChange.tv2[stock$pos==position]
     
-    summary$occurence[j]<-cpos2$occurence[cpos2$pos==position]
+    if (position==326|position==328|position==431|position==539) { 
+                fq<-cpos[cpos$Pos==position,]
+                summary$occurence[j]<-cpos$Freq[cpos$Pos==position & cpos$Type==summary$Type.1[j]]}
+    else {summary$occurence[j]<-cpos$Freq[cpos$Pos==position]}
     
 }
 
+
+summary$AApos<-ceiling(summary$pos/3)
 write.csv(summary,"Output/MF_PID/HighFreq/Summary_highFreq_sites.csv")
+

@@ -7,6 +7,8 @@ library(scales)
 library(plotrix)
 library(RColorBrewer)
 
+#The core 9 animal IDs
+animals<-c("A21918","A22117","A22217","A22317","A22517","A22617","A23918","A34119","A34219")
 
 #* Transition function*
 transition<-function(nuc){

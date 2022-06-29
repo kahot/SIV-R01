@@ -3,11 +3,11 @@ library(stringr)
 # Process Raw FASTAQ files
 
 #Specify your Run name
-run="Run7_"
+run="Run8_"
 
 #select the directory where fastq files are saved
-dir<-"~/programs/BaseSpace/B670_Run_7_Repeat_2-292249961/FASTQ_Generation_2021-09-07_14_35_26Z-457696525/"
-
+#dir<-"~/programs/BaseSpace/B670_Run_7_Repeat_2-292249961/FASTQ_Generation_2021-09-07_14_35_26Z-457696525/"
+dir<-"~/programs/BaseSpace/B670_Rp_2022-03-21T13_12_51_626da3b-345194904/FASTQ_Generation_2022-03-23_22_48_35Z-543833290/"
 
 #Other runs
 run="Run6_"
@@ -104,7 +104,7 @@ for (i in 1:length(runfiles)){
 ## Step 3: Run Merge.ForRevPID.R first. This step is for post merging 
 # Map PID-consensus fasta to reference using bwa (w/ relaxed setting)
 
-files<-list.files("Output/PID_Consensus/", pattern = "Run3_")
+files<-list.files("Output/PID_Consensus/", pattern = "Run8_")
 #files<-list.files("Output/PID_Consensus/", pattern = ".fasta")
 
 temp<-readLines("Data/template/Bash_mapConPID.sh")

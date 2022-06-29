@@ -4,7 +4,7 @@ source("Rscripts/BaseRscript.R")
 
 #get the file name
 SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="con.csv")
-SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="Run3")
+SIVFiles_SeqData<-list.files("Output/SeqData_PID/",pattern="Run8")
 
 #Overview<-list()
 for (i in 1:length(SIVFiles_SeqData)){   
@@ -181,9 +181,11 @@ for (i in 1:length(SIVFiles_SeqData)){
       
         write.csv(OverviewDF,paste0("Output/Overview_PID/",id,"_overview.csv"))
         
-        #filter the sites with reads<100
-        remove<-which(OverviewDF$TotalReads<100)
+        #filter the sites with reads<10
+        remove<-which(OverviewDF$TotalReads<10)
         OverviewDF[remove, 7:16]<-NA
+        #adjust the start position = 215
+        OverviewDF<-OverviewDF[OverviewDF$pos>=215,]
         write.csv(OverviewDF,paste0("Output/OverviewF_PID/",id,"_filtered.overview.csv"))
 }
 
@@ -259,3 +261,4 @@ OverviewDF<-read.csv("Output/Overview/Run3_9__overview.csv",row.names = 1, strin
 OverviewDF<-OverviewDF[,c(1,4,20,21,22,34:44)]
 write.csv(OverviewDF,"Output/Overview.ref.csv")
   
+

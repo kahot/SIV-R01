@@ -24,7 +24,6 @@ names(mycolors)<-levels(AAs)
 
 #Alignment fasta file list
 fafiles<-list.files("Output/PID_Con_Alignment/",pattern=".fasta")
-fafiles<-list.files("Output/PID_Con_Alignment/",pattern="^Run7")
 
 for (i in 1: length(fafiles)){
     fname<-gsub(".Alignment.fasta","",fafiles[i])
@@ -39,14 +38,15 @@ for (i in 1: length(fafiles)){
     write.csv(aa, paste0("Output/AA/", fname,"AA.seq.csv"))
 }
 
-
-
+####
 reference<-read.dna("Data/AY032751env.fasta", format = "fasta",as.character=TRUE)
 ref<-reference[217:690]
 refAA<-seqinr::translate(ref)
 
 
 samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
+samples<-samples[samples$Monkey %in% animals,]
+
 samples$Week<-as.integer(samples$Week)
 list.animal<-split(samples, samples$Monkey)
 monkeyList<-list()
@@ -59,10 +59,7 @@ for (i in 1:length(list.animal)){
   }
 }
 tbs<-read.csv("Data/TBinfection.week.csv",stringsAsFactors = F)
-monkeyList<-monkeyList[tbs$ids]
 Monkeys<-names(monkeyList)
-
-
 
 #create haplotype plots with AA
 for (i in 1:length(Monkeys)){

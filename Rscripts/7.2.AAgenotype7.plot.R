@@ -1,4 +1,4 @@
-#Genotype with 11 sites
+#Genotype with 7 sites
 library(ggplot2)
 library(gridExtra)
 library(colorspace)
@@ -6,14 +6,16 @@ library(seqinr)
 library(stringr)
 library(reshape2)
 library(ggpattern)
-cols<-qualitative_hcl(6, palette="Dark3")
+cols<-qualitative_hcl(8, palette="Dark3")
 
 ### 
-hsites<-read.csv("Output/MF_PID/HighFreq/HighFreq.sites.selected.csv", stringsAsFactors = F)
-sites<-hsites$pos
+mutations<-read.csv("Output/MF_PID/HighFreq/Summary_highFreq_sites.csv", stringsAsFactors = F, row.names = 1)
+sites<-mutations$pos
 
+sites<-sites[1:7]
 #AA sites
 AAsites<-ceiling(sites/3)
+
 
 #Ref genotype
 ref<-read.csv("Output/Overview.ref.csv", row.names = 1,stringsAsFactors = F)
@@ -21,33 +23,33 @@ ref<-ref[ref$pos %in% sites,]
 WTaa<-toupper(paste0(ref$RefAA, collapse = ''))
 
 
-mutations<-read.csv("Output/MF_PID/HighFreq/Summary_highFreq_sites.csv", stringsAsFactors = F, row.names = 1)
-mutations<-mutations[order(mutations$occurence, decreasing = T),]
+colnames(mutations)[colnames(mutations)=="occurence"]<-"Freq"
 mutations<-mutations[mutations$pos %in% sites,]
 mutations<-mutations[order(mutations$pos),]
 
 #The mutated AA
 muAA<-mutations$aa1  
-#NT:297 305 326 340 373 431 485 515 536 539 548 
-#AA: 99 102 109 114 125 144 162 172 179 180 183 
-#   "E" "K" "E" "T" "D" "Q" "R" "T" "S" "N" "N"
+#NT:297 305 326 328 340 373 431 
+#AA: 99 102 109 110 114 125 144 
+#   "E" "K" "E" "T" "T" "D" "Q" 
 
 
 #apply(mutations[,c("WTAA","aa1")], 1, function(x) paste0(x["WTAA"], "\U2192",x["aa1"]))
 #paste0(mutations$WTAA,"->",mutations$aa1)
 
 
-HS<-read.csv("Output/HighMutfreq_sites_all.csv",stringsAsFactors = F, row.names = 1)
+#HS<-read.csv("Output/HighMutfreq_sites_all.csv",stringsAsFactors = F, row.names = 1)
+#mutations<-merge(mutations, HS[,c(1:12)])
 
-mutations<-merge(mutations, HS[,c(1:12)])
 mutations$AApos<-AAsites
-#write.csv(mutations,"Output/AA/11Mutations_summary.csv")
+write.csv(mutations,"Output/AA/7Mutations_summary.csv")
 
 
 
 ####
 tbs<-read.csv("Data/TBinfection.week.csv",stringsAsFactors = F)
 samples<-read.csv("Data/SamplesNoduplicates.csv",stringsAsFactors = F)
+samples<-samples[samples$Monkey %in% animals,]
 samples$Week<-as.integer(samples$Week)
 
 samples<-samples[samples$File.name!="Run4_18",]
@@ -61,21 +63,24 @@ for (i in 1:length(list.animal)){
         k=k+1
     }
 }
-monkeyLis<-monkeyList[tbs$ids]
+
+ID<-c("A21918","A22117","A22217","A22317","A22517","A22617","A23918","A34119","A34219")
+monkeyLis<-monkeyList[ID]
 monkeys<-names(monkeyLis)
 
-stock<-read.csv("Output/AA/Genotype.freq/Run0_17.AA.11gtypeFreq.csv", stringsAsFactors = F, row.names = 1)
+
+stock<-read.csv("Output/AA/Genotype.freq7/Run0_17.AA.7gtypeFreq.csv", stringsAsFactors = F, row.names = 1)
 stock$Freq<-as.integer(stock$Freq)
 stock$Prop<-stock$Freq/sum(stock$Freq)
 stock$Week<-0
 stock$Tissue<-"Stock"
 
 
-files<-list.files("Output/AA/Genotype.freq/", pattern="11gtypeFreq.csv")
+files<-list.files("Output/AA/Genotype.freq7/", pattern="7gtypeFreq.csv")
 
 Gtype<-list()
 for (i in 1: length(files)){
-    df<-read.csv(paste0("Output/AA/Genotype.freq/",files[i]), stringsAsFactors = F, row.names = 1)
+    df<-read.csv(paste0("Output/AA/Genotype.freq7/",files[i]), stringsAsFactors = F, row.names = 1)
     fname<-substring(files[i],1,7)
     Gtype[[i]]<-df
     names(Gtype)[i]<-fname
@@ -87,18 +92,17 @@ for (i in 1: length(files)){
 
 color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 color<-color[color!="white"]
-color<-color[!color %in% c("turquoise", "skyblue", "ivory")]
-color<-c("turquoise", "skyblue", "ivory", color,color)
+color<-color[!(color %in% c("turquoise", "skyblue", "ivory"))]
+color<-c("turquoise", cols,color,color)
 
-GT40<-read.csv("Output/AA/MostcommonGenotypes_40.csv", row.names = 1, stringsAsFactors = F)
-gt40<-GT40$Genotype
-gt40<-gt40[gt40!="WT"]
-
+GT40<-read.csv("Output/AA/Mostcommon40.Genotype7.csv", row.names = 1, stringsAsFactors = F)
+gt30<-GT40$Genotype[1:30]
+gt30<-gt30[gt30!="WT"]
 
 
 MUT<-data.frame(Monkey=monkeys)
 Initial<-data.frame(Monkey=monkeys)
-for (m in 1:length(monkeys2)){
+for (m in 1:length(monkeyLis)){
     #Select the monkey
     sample<-monkeyLis[[m]]
     sample<-sample[order(sample$Week),]
@@ -140,24 +144,24 @@ for (m in 1:length(monkeys2)){
     #select plasma only
     plasma<-Gdata[Gdata$Tissue=="Plasma"|Gdata$Tissue=="Stock",]
     uniquegt<-unique(plasma$Genotype)
-    uniquegt<-uniquegt[!(uniquegt %in% c("WT","Singleton","Doubleton", gt40))]
-    plasma$Genotype<-factor(plasma$Genotype, levels=c("WT","Singleton","Doubleton", gt40, paste(uniquegt)))
-    labels=c("WT","Singleton","Doubleton", gt40[1:5])
-    ggplot(data=plasma,aes(x=Week, y=Prop, fill=Genotype))+
-        geom_area()+
-        geom_vline(xintercept=tbweek, col="blue", size=0.3)+ylab("Proportion")+
-        ggtitle(monkey)+
-        #scale_fill_manual(values = color)+
-        scale_fill_discrete(type=color,breaks=labels)
-    #ggsave(paste0("Output/AA/11GenotypeChange_",monkey,".pdf"),width = 9,height = 5)
+    uniquegt<-uniquegt[!(uniquegt %in% c("WT","Singleton","Doubleton", gt30))]
+    plasma$Genotype<-factor(plasma$Genotype, levels=c("WT","Singleton","Doubleton", gt30, paste(uniquegt)))
+    labels=c("WT","Singleton","Doubleton", gt30[1:5])
+    #ggplot(data=plasma,aes(x=Week, y=Prop, fill=Genotype))+
+    #    geom_area()+
+    #    geom_vline(xintercept=tbweek, col="blue", size=0.3)+ylab("Proportion")+
+    #    ggtitle(monkey)+
+    #    #scale_fill_manual(values = color)+
+    #    scale_fill_discrete(type=color,breaks=labels)
+    ##ggsave(paste0("Output/AA/11GenotypeChange_",monkey,".pdf"),width = 9,height = 5)
     
     #which genotypes have the specific mutation?
     plasma$Genotype<-as.character(plasma$Genotype)
     plasma$Genotype[plasma$Genotype=="WT"]<-WTaa
     
-    plasma$Genotype2<-factor(plasma$Genotype, levels=c(WTaa,"Singleton","Doubleton", gt40, paste(uniquegt)))
-    labels<-c("WT","Singleton","Doubleton", gt40[1:5])
-    breaks<-c(WTaa,"Singleton","Doubleton", gt40[1:5])
+    plasma$Genotype2<-factor(plasma$Genotype, levels=c(WTaa,"Singleton","Doubleton", gt30, paste(uniquegt)))
+    labels<-c("WT","Singleton","Doubleton", gt30[1:5])
+    breaks<-c(WTaa,"Singleton","Doubleton", gt30[1:5])
     
     plots<-list()
     for (k in 1:length(AAsites)){
@@ -197,23 +201,22 @@ for (m in 1:length(monkeys2)){
             Initial[m,(k+1)]<-b
     }
     
-    pdf(paste0("Output/AA/Figures/11/",monkey,".11genotypeFreq.pdf"), width = 20, height = 20)
+    pdf(paste0("Output/AA/Genotype7/figures/",monkey,".7genotypeFreq.pdf"), width = 20, height = 20)
     do.call(grid.arrange, c(plots, ncol=2))
     dev.off()
     
 }
 
 colnames(MUT)[2:ncol(MUT)]<-paste0("AA.",AAsites)
-colnames(Init)[2:ncol(Init)]<-paste0("AA.",AAsites)
+colnames(Initial)[2:ncol(Initial)]<-paste0("AA.",AAsites)
 
-MUT<-data.frame(rbind(Init[1,],MUT))
+MUT<-data.frame(rbind(Initial[1,],MUT))
 MUT$Monkey[1]<-"Stock"
 
-write.csv(MUT, "Output/AA/Final.MutAAFreq.11sites.csv")
+write.csv(MUT, "Output/AA/Final.MutAAFreq.7sites.csv")
 
-#remove the moneky 34219
-#MUT<-read.csv("Output/AA/Final.MutAAFreq.14sites.csv", row.names = 1, stringsAsFactors = )
-MUT<-MUT[!is.na(MUT$AA.102),]
+#remove the monkey 34219
+#MUT<-read.csv("Output/AA/Final.MutAAFreq.7sites.csv", row.names = 1, stringsAsFactors = )
 Mutm<-melt(MUT, id.vars="Monkey")
 colnames(Mutm)[2:3]<-c("AApos","Freq")
 
@@ -238,22 +241,20 @@ ggplot(data=Mutm, aes(x=AApos, y=Freq, fill=Monkey))+
     geom_vline(xintercept = c(1:10)+0.5, color="gray70", size=0.3)+
     scale_fill_manual(values=cols)+
     scale_x_discrete(labels = xlabels)
-ggsave("Output/AA/FinalAA10freq.summary.pdf", width = 8, height = 4)
+ggsave("Output/AA/FinalAA7freq.summary.png", width = 8, height = 4, units = "in", dpi=300)
 
 
 
 ##### Remove singletons and doubletons from the area plot
-#remove 34019 since it only has tissues for now
-monkeys2<-monkeys[-9]
-monkeyLis2<-monkeyLis[monkeys2]
-MUT<-data.frame(Monkey=monkeys2)
-Initial<-data.frame(Monkey=monkeys2)
-for (m in 1:length(monkeyLis2)){
+
+MUT<-data.frame(Monkey=monkeys)
+Initial<-data.frame(Monkey=monkeys)
+for (m in 1:length(monkeyLis)){
     #Select the monkey
-    sample<-monkeyLis2[[m]]
+    sample<-monkeyLis[[m]]
     sample<-sample[order(sample$Week),]
     gfiles<-Gtype[as.vector(sample$File.name)]
-    monkey<-names(monkeyLis2)[m]
+    monkey<-names(monkeyLis)[m]
     tbweek<-tbs$tb[tbs$ids==monkey]
     
     
@@ -292,26 +293,26 @@ for (m in 1:length(monkeyLis2)){
     plasma<-Gdata[Gdata$Tissue=="Plasma"|Gdata$Tissue=="Stock",]
     
     uniquegt<-unique(plasma$Genotype)
-    uniquegt<-uniquegt[!(uniquegt %in% c("WT",gt40))]
-    plasma$Genotype<-factor(plasma$Genotype, levels=c("WT",gt40, paste(uniquegt)))
-    labels=c("WT", gt40[1:7])
-    ggplot(data=plasma,aes(x=Week, y=Prop, fill=Genotype))+
-        geom_area()+
-        geom_vline(xintercept=tbweek, col="blue", size=0.3)+ylab("Proportion")+
-        ggtitle(monkey)+
-        #scale_fill_manual(values = color)+
-        scale_fill_discrete(type=color,breaks=labels)
-    ggsave(paste0("Output/AA/Figures/11/11GenotypeChange_NoSingletonsDoubletons",monkey,".pdf"),width = 9,height = 5)
+    uniquegt<-uniquegt[!(uniquegt %in% c("WT",gt30))]
+    plasma$Genotype<-factor(plasma$Genotype, levels=c("WT",gt30, paste(uniquegt)))
+    labels=c("WT", gt30[1:7])
+    #ggplot(data=plasma,aes(x=Week, y=Prop, fill=Genotype))+
+    #    geom_area()+
+    #    geom_vline(xintercept=tbweek, col="blue", size=0.3)+ylab("Proportion")+
+    #    ggtitle(monkey)+
+    #    #scale_fill_manual(values = color)+
+    #    scale_fill_discrete(type=color,breaks=labels)
+    #ggsave(paste0("Output/AA/Genotype7/figures/7GenotypeChange.",monkey,".pdf"),width = 9,height = 5)
     
     #which genotypes have the specific mutation?
     plasma$Genotype<-as.character(plasma$Genotype)
     plasma$Genotype[plasma$Genotype=="WT"]<-WTaa
     
-    plasma$Genotype2<-factor(plasma$Genotype, levels=c(WTaa,gt40, paste(uniquegt)))
-    labels<-c("WT", gt40[1:7])
-    breaks<-c(WTaa, gt40[1:7])
+    plasma$Genotype2<-factor(plasma$Genotype, levels=c(WTaa,gt30, paste(uniquegt)))
+    labels<-c("WT", gt30[1:7])
+    breaks<-c(WTaa, gt30[1:7])
     
-    #plots<-list()
+    plots<-list()
     for (k in 1:length(AAsites)){
         mutant<-muAA[k]
         plasma$mut<-sapply(plasma$Genotype, function(x) {
@@ -346,9 +347,9 @@ for (m in 1:length(monkeyLis2)){
         Initial[m,(k+1)]<-b
     }
     
-    #pdf(paste0("Output/AA/Figures/11/",monkey,".11genotypeFreq_nosingleton.pdf"), width = 20, height = 20)
-    #do.call(grid.arrange, c(plots, ncol=2))
-    #dev.off()
+    pdf(paste0("Output/AA/Genotype7/figures/",monkey,".7genotypeFreq_nosingleton.pdf"), width = 20, height = 20)
+    do.call(grid.arrange, c(plots, ncol=2))
+    dev.off()
     
 }
 
@@ -363,7 +364,6 @@ MUT$Monkey[1]<-"Stock"
 MUT$coinfection<-"Y"
 MUT$coinfection[MUT$Monkey=="A34119"| MUT$Monkey=="A34219"]<-"N"
 
-#MUT<-MUT[!is.na(MUT$AA.102),]
 Mutm<-melt(MUT, id.vars=c("Monkey","coinfection"))
 colnames(Mutm)[3:4]<-c("AApos","Freq")
 
@@ -395,12 +395,11 @@ ggplot(data=Mutm, aes(x=AApos, y=Freq, fill=Monkey,pattern=coinfection))+
     scale_pattern_manual(values = c(N = "stripe", Y = "none"))+
     theme_bw()+
     ylab("Frequency")+xlab('')+
-    theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank())+
+    theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(), axis.text.x = element_text(size=10))+
     geom_vline(xintercept = c(1:10)+0.5, color="gray70", size=0.3)+
     scale_fill_manual(values=cols)+
     scale_x_discrete(labels = xlabels)+
     guides(pattern = guide_legend(override.aes = list(fill = "white")),
            fill = guide_legend(override.aes = list(pattern = "none")))
-#ggsave("Output/AA/FinalAA11freq.summary_noSingleton.pdf", width = 9, height = 4)
-ggsave("Output/AA/FinalAA11freq.summary_noSingleton2.png", width = 10, height = 5, dpi=300, unit="in")
+ggsave("Output/AA/FinalAA7freq.summary_noSingleton.png", width = 10, height = 6, dpi=300, unit="in")
 
